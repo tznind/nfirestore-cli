@@ -25,6 +25,7 @@ namespace nfirestore_cli {
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
             createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;
             textField.KeyDown += TextField_KeyDown;
+            exitMenuItem.Action = ()=>Application.RequestStop();
         }
 
         private void TextField_KeyDown(object sender, Key e)
