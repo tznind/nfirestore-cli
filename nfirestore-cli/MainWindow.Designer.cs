@@ -31,7 +31,20 @@ namespace nfirestore_cli {
         
         private Terminal.Gui.TextField textField;
         
+        private Terminal.Gui.MenuBar menuBar;
+        
+        private Terminal.Gui.MenuBarItem fileF9Menu;
+        
+        private Terminal.Gui.MenuItem exitMenuItem;
+        
+        private Terminal.Gui.MenuBarItem testMenu;
+        
+        private Terminal.Gui.MenuItem createTestDocumentsMenuItem;
+        
+        private Terminal.Gui.MenuItem createTestNestedDocumentsMenuItem;
+        
         private void InitializeComponent() {
+            this.menuBar = new Terminal.Gui.MenuBar();
             this.textField = new Terminal.Gui.TextField();
             this.frameViewDocuments = new Terminal.Gui.FrameView();
             this.textViewData = new Terminal.Gui.TextView();
@@ -53,9 +66,9 @@ namespace nfirestore_cli {
             this.Modal = false;
             this.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.frameViewObjects.Width = 30;
-            this.frameViewObjects.Height = Dim.Fill(3);
+            this.frameViewObjects.Height = Dim.Fill(4);
             this.frameViewObjects.X = 0;
-            this.frameViewObjects.Y = 0;
+            this.frameViewObjects.Y = 1;
             this.frameViewObjects.Visible = true;
             this.frameViewObjects.Data = "frameViewObjects";
             this.frameViewObjects.TextAlignment = Terminal.Gui.TextAlignment.Left;
@@ -67,7 +80,7 @@ namespace nfirestore_cli {
             this.tlvObjects.Y = 0;
             this.tlvObjects.Visible = true;
             this.tlvObjects.Data = "tlvObjects";
-            this.tlvObjects.Text = "";
+            this.tlvObjects.Text = "Test";
             this.tlvObjects.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.tlvObjects.Style.CollapseableSymbol = new System.Text.Rune('-');
             this.tlvObjects.Style.ColorExpandSymbol = false;
@@ -77,9 +90,9 @@ namespace nfirestore_cli {
             this.tlvObjects.Style.ShowBranchLines = true;
             this.frameViewObjects.Add(this.tlvObjects);
             this.frameViewData.Width = Dim.Fill(0);
-            this.frameViewData.Height = Dim.Fill(0);
+            this.frameViewData.Height = Dim.Fill(1);
             this.frameViewData.X = Pos.Right(frameViewObjects);
-            this.frameViewData.Y = 0;
+            this.frameViewData.Y = 1;
             this.frameViewData.Visible = true;
             this.frameViewData.Data = "frameViewData";
             this.frameViewData.TextAlignment = Terminal.Gui.TextAlignment.Centered;
@@ -100,7 +113,7 @@ namespace nfirestore_cli {
             this.frameViewDocuments.Width = 30;
             this.frameViewDocuments.Height = 3;
             this.frameViewDocuments.X = 0;
-            this.frameViewDocuments.Y = Pos.Percent(100f) - 3;
+            this.frameViewDocuments.Y = Pos.Bottom(frameViewObjects);
             this.frameViewDocuments.Visible = true;
             this.frameViewDocuments.Data = "frameViewDocuments";
             this.frameViewDocuments.TextAlignment = Terminal.Gui.TextAlignment.Left;
@@ -116,6 +129,35 @@ namespace nfirestore_cli {
             this.textField.Text = "";
             this.textField.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.frameViewDocuments.Add(this.textField);
+            this.menuBar.Width = Dim.Fill(0);
+            this.menuBar.Height = 1;
+            this.menuBar.X = 0;
+            this.menuBar.Y = 0;
+            this.menuBar.Visible = true;
+            this.menuBar.Data = "menuBar";
+            this.menuBar.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.fileF9Menu = new Terminal.Gui.MenuBarItem();
+            this.fileF9Menu.Title = "_File (F9)";
+            this.exitMenuItem = new Terminal.Gui.MenuItem();
+            this.exitMenuItem.Title = "Exit";
+            this.exitMenuItem.Data = "exitMenuItem";
+            this.fileF9Menu.Children = new Terminal.Gui.MenuItem[] {
+                    this.exitMenuItem};
+            this.testMenu = new Terminal.Gui.MenuBarItem();
+            this.testMenu.Title = "Test";
+            this.createTestDocumentsMenuItem = new Terminal.Gui.MenuItem();
+            this.createTestDocumentsMenuItem.Title = "Create Test Documents";
+            this.createTestDocumentsMenuItem.Data = "createTestDocumentsMenuItem";
+            this.createTestNestedDocumentsMenuItem = new Terminal.Gui.MenuItem();
+            this.createTestNestedDocumentsMenuItem.Title = "Create Test Nested Documents";
+            this.createTestNestedDocumentsMenuItem.Data = "createTestNestedDocumentsMenuItem";
+            this.testMenu.Children = new Terminal.Gui.MenuItem[] {
+                    this.createTestDocumentsMenuItem,
+                    this.createTestNestedDocumentsMenuItem};
+            this.menuBar.Menus = new Terminal.Gui.MenuBarItem[] {
+                    this.fileF9Menu,
+                    this.testMenu};
+            this.Add(this.menuBar);
         }
     }
 }

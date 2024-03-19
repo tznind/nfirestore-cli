@@ -11,15 +11,65 @@ namespace nfirestore_cli {
     using Google.Api.Gax;
     using Google.Cloud.Firestore;
     using Google.Cloud.Firestore.V1;
+    using Newtonsoft.Json;
     using Terminal.Gui;
     
     
     public partial class MainWindow {
         private readonly Options options;
+        private FirestoreDb db;
 
         public MainWindow(Options o) {
             InitializeComponent();
             this.options = o;
+            createTestDocumentsMenuItem.Action = CreateTestDocuments;
+        }
+
+        private void CreateTestDocuments()
+        {
+            if(db == null)
+            {
+                return;
+            }
+
+            try
+            {
+                // Create a document with a random ID in the "users" collection.
+                CollectionReference collection = db.Collection("test_collection");
+
+                collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = 1815 }).Wait();
+                RefreshTree();
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
+        }
+
+        private void RefreshTree()
+        {
+            if(db == null)
+            {
+                return;
+            }
+            try
+            {
+                tlvObjects.ClearObjects();
+                var collections = db.ListRootCollectionsAsync().ToArrayAsync().Result;
+                if(collections.Length > 0)
+                {
+                    tlvObjects.AddObjects(collections);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
+        }
+
+        private void ShowException(Exception ex)
+        {
+            MessageBox.ErrorQuery("Error", ex.Message, "Close");
         }
 
         public override void OnLoaded()
@@ -33,15 +83,45 @@ namespace nfirestore_cli {
                 var builder = new FirestoreDbBuilder
                 {
                     ProjectId = options.Project,
-                    EmulatorDetection = Google.Api.Gax.EmulatorDetection.EmulatorOnly
+                    EmulatorDetection = Google.Api.Gax.EmulatorDetection.EmulatorOrProduction
                 };
 
-                var db = builder.Build();
+                this.db = builder.Build();
+
+                tlvObjects.TreeBuilder = new FirestoreTreeBuilder(this.db);
+                tlvObjects.AspectGetter = AspectGetter;
+                tlvObjects.SelectionChanged += TlvObjects_SelectionChanged;
+                
+                RefreshTree();
             }
             catch (Exception ex)
             {
                 MessageBox.ErrorQuery("Error Loading", $"{ex.Message}{Environment.NewLine}{Environment.NewLine}Emulator Variable is:{(string.IsNullOrWhiteSpace(emu) ? "missing":emu)}", "Close");
             }
+        }
+
+        private void TlvObjects_SelectionChanged(object sender, SelectionChangedEventArgs<object> e)
+        {
+            if(tlvObjects.SelectedObject is DocumentReference dr)
+            {
+                var snap = dr.GetSnapshotAsync().Result;
+                textViewData.Text = JsonConvert.SerializeObject(snap.ToDictionary(),Formatting.Indented);
+            }
+        }
+
+        private string AspectGetter(object toRender)
+        {
+            if(toRender is CollectionReference cr)
+            {
+                return cr.Id;
+            }
+
+            if(toRender is DocumentReference dr)
+            {
+                return dr.Id;
+            }
+
+            return "Unknown Object Type";
         }
     }
 }
