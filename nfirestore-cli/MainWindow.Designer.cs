@@ -103,7 +103,7 @@ namespace nfirestore_cli {
             this.textViewData.X = 0;
             this.textViewData.Y = 0;
             this.textViewData.Visible = true;
-            this.textViewData.AllowsTab = true;
+            this.textViewData.AllowsTab = false;
             this.textViewData.AllowsReturn = true;
             this.textViewData.WordWrap = false;
             this.textViewData.Data = "textViewData";
@@ -117,7 +117,7 @@ namespace nfirestore_cli {
             this.frameViewDocuments.Visible = true;
             this.frameViewDocuments.Data = "frameViewDocuments";
             this.frameViewDocuments.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameViewDocuments.Title = "Document Lookup (/)";
+            this.frameViewDocuments.Title = "Document Lookup";
             this.Add(this.frameViewDocuments);
             this.textField.Width = Dim.Fill(0);
             this.textField.Height = 1;

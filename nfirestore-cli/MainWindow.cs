@@ -24,6 +24,45 @@ namespace nfirestore_cli {
             this.options = o;
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
             createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;
+            textField.KeyDown += TextField_KeyDown;
+        }
+
+        private void TextField_KeyDown(object sender, Key e)
+        {
+            if(e.KeyCode == Key.Enter)
+            {
+                ShowDocument(textField.Text);
+            }
+        }
+
+        private void ShowDocument(string text)
+        {
+            if(db == null || string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
+            try
+            {
+                ShowDocument(db.Document(text));
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
+        }
+
+        private void ShowDocument(DocumentReference dr)
+        {
+            try
+            {
+                var snap = dr.GetSnapshotAsync().Result;
+                frameViewData.Title = "Data - " + dr.Id;
+                textViewData.Text = JsonConvert.SerializeObject(snap.ToDictionary(), Formatting.Indented);
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
         }
 
         private void CreateNestedTestDocuments()
@@ -126,9 +165,7 @@ namespace nfirestore_cli {
         {
             if(tlvObjects.SelectedObject is DocumentReference dr)
             {
-                var snap = dr.GetSnapshotAsync().Result;
-                frameViewData.Title = "Data - " + dr.Id;
-                textViewData.Text = JsonConvert.SerializeObject(snap.ToDictionary(),Formatting.Indented);
+                ShowDocument(dr);
             }
         }
 
