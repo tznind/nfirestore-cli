@@ -8,6 +8,8 @@ Expanded functionality includes
 
 - Support for nested collections
 
+![firestore-tui](https://github.com/tznind/nfirestore-cli/assets/31306100/40e1737e-0dac-491a-ba4f-e6967e6ceb09)
+
 ## Running Program
 Enter the project root and run
 
