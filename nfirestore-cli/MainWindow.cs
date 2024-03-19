@@ -23,6 +23,27 @@ namespace nfirestore_cli {
             InitializeComponent();
             this.options = o;
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
+            createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;
+        }
+
+        private void CreateNestedTestDocuments()
+        {
+            if (db == null)
+            {
+                return;
+            }
+            try
+            {
+                CollectionReference collection = db.Collection("test_nested/level1/level2");
+                var r = new Random();
+
+                collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = r.Next(1900, 2024) }).Wait();
+                RefreshTree();
+            }
+            catch (Exception ex)
+            {
+                ShowException(ex);
+            }
         }
 
         private void CreateTestDocuments()
@@ -31,13 +52,14 @@ namespace nfirestore_cli {
             {
                 return;
             }
-
             try
             {
-                // Create a document with a random ID in the "users" collection.
+
                 CollectionReference collection = db.Collection("test_collection");
 
-                collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = 1815 }).Wait();
+                var r = new Random();
+
+                collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = r.Next(1900,2024) }).Wait();
                 RefreshTree();
             }
             catch (Exception ex)
@@ -105,6 +127,7 @@ namespace nfirestore_cli {
             if(tlvObjects.SelectedObject is DocumentReference dr)
             {
                 var snap = dr.GetSnapshotAsync().Result;
+                frameViewData.Title = "Data - " + dr.Id;
                 textViewData.Text = JsonConvert.SerializeObject(snap.ToDictionary(),Formatting.Indented);
             }
         }

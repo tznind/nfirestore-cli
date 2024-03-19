@@ -29,6 +29,11 @@ namespace nfirestore_cli
                     return cr.ListDocumentsAsync().ToArrayAsync().Result;
                 }
 
+
+                if (forObject is DocumentReference dr)
+                {
+                    return dr.ListCollectionsAsync().ToArrayAsync().Result;
+                }
             }
             catch (Exception ex)
             {
