@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "nfirestore-cli": {
+      "commandName": "Project",
+      "commandLineArgs": "-p dummy_project"
+    }
+  }
+}
