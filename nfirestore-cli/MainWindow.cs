@@ -8,7 +8,6 @@
 //  </auto-generated>
 // -----------------------------------------------------------------------------
 namespace nfirestore_cli {
-    using Google.Api.Gax;
     using Google.Cloud.Firestore;
     using Google.Cloud.Firestore.V1;
     using Newtonsoft.Json;
@@ -94,7 +93,6 @@ namespace nfirestore_cli {
             }
             try
             {
-
                 CollectionReference collection = db.Collection("test_collection");
 
                 var r = new Random();
@@ -150,7 +148,7 @@ namespace nfirestore_cli {
 
                 this.db = builder.Build();
 
-                tlvObjects.TreeBuilder = new FirestoreTreeBuilder(this.db);
+                tlvObjects.TreeBuilder = new FirestoreTreeBuilder(this.db, this.options.Limit);
                 tlvObjects.AspectGetter = AspectGetter;
                 tlvObjects.SelectionChanged += TlvObjects_SelectionChanged;
                 
@@ -177,12 +175,17 @@ namespace nfirestore_cli {
                 return cr.Id;
             }
 
-            if(toRender is DocumentReference dr)
+            if(toRender is Document d)
             {
-                return dr.Id;
+                return LastPart(d.Name);
             }
 
-            return "Unknown Object Type";
+            return "Unknown Object Type " + toRender.GetType().Name;
+        }
+
+        private string LastPart(string name)
+        {
+            return name.Substring(name.LastIndexOf('/')+1);
         }
     }
 }
