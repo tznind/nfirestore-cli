@@ -174,8 +174,12 @@ namespace nfirestore_cli {
             {
                 return cr.Id;
             }
+            if (toRender is DocumentReference dr)
+            {
+                return LastPart(dr.Id);
+            }
 
-            if(toRender is Document d)
+            if (toRender is Document d)
             {
                 return LastPart(d.Name);
             }

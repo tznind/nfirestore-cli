@@ -1,5 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 using Google.Cloud.Firestore.V1;
+using System.IO.Abstractions;
 using System.Reflection;
 using Terminal.Gui;
 
@@ -9,7 +10,10 @@ namespace nfirestore_cli
     {
         private FirestoreDb db;
         private readonly int limit;
+
         private readonly PropertyInfo pParentPath;
+        private readonly PropertyInfo pDocumentsPath;
+        private readonly MethodInfo mGetDocumentReferenceFromResourceName;
 
         public FirestoreTreeBuilder(FirestoreDb db, int limit)
         {
@@ -17,6 +21,13 @@ namespace nfirestore_cli
             this.limit = limit;
             this.pParentPath = typeof(CollectionReference).GetProperty("ParentPath", BindingFlags.NonPublic | BindingFlags.Instance)
                 ?? throw new Exception("Expected property was not present");
+            
+            this.pDocumentsPath = typeof(FirestoreDb).GetProperty("DocumentsPath", BindingFlags.NonPublic | BindingFlags.Instance)
+                ?? throw new Exception("Expected property was not present");
+
+            this.mGetDocumentReferenceFromResourceName = typeof(FirestoreDb).GetMethod("GetDocumentReferenceFromResourceName", BindingFlags.NonPublic | BindingFlags.Instance)
+                ?? throw new Exception("Expected method was not present");
+
         }
 
         public bool SupportsCanExpand => false;
@@ -32,13 +43,14 @@ namespace nfirestore_cli
             {
                 if (forObject is CollectionReference cr)
                 {
-                    Document[] toReturn =  ListDocuments(cr).ToArray();
+                    DocumentReference[] toReturn =  ListDocuments(cr).ToArray();
                     return toReturn;
                 }
 
-                if (forObject is Document d)
+                if (forObject is DocumentReference d)
                 {
-                    return ListCollections(d.Name );
+                    var toReturn = ListCollections(d);
+                    return toReturn;
                 }
             }
             catch (Exception ex)
@@ -48,18 +60,15 @@ namespace nfirestore_cli
             return Enumerable.Empty<object>();
         }
 
-        private IEnumerable<CollectionReference> ListCollections(string name)
+        private IEnumerable<CollectionReference> ListCollections(DocumentReference d)
         {
-            ListCollectionIdsRequest options = new ListCollectionIdsRequest
-            {
-                PageSize = limit,
-                Parent = name,
-            };
-
-            return db.Client.ListCollectionIds(options).Select(db.Collection).ToArray();
+            var rootDocumentsPath = (string)pDocumentsPath.GetValue(db);
+            return db.Client
+                .ListCollectionIds(d?.Path ?? rootDocumentsPath, null,limit)
+                .Select(id =>db.Collection(id));
         }
 
-        IEnumerable<Document> ListDocuments(CollectionReference cr)
+        IEnumerable<DocumentReference> ListDocuments(CollectionReference cr)
         {
             // Construct options with specified page size
             ListDocumentsRequest options = new ListDocumentsRequest
@@ -71,7 +80,10 @@ namespace nfirestore_cli
                 Mask = new DocumentMask()
             };
 
-            return db.Client.ListDocuments(options);
+            return db.Client
+                .ListDocuments(options)
+                .Select(doc =>
+                    (DocumentReference)mGetDocumentReferenceFromResourceName.Invoke(db, new[] { doc.Name }));
         }
     }
 }
