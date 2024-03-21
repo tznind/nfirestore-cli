@@ -6,7 +6,7 @@ using Terminal.Gui;
 
 namespace nfirestore_cli
 {
-    internal class FirestoreTreeBuilder : ITreeBuilder<object>
+    public class FirestoreTreeBuilder : ITreeBuilder<object>
     {
         private FirestoreDb db;
         private readonly int limit;
