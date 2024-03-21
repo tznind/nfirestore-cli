@@ -48,7 +48,28 @@ namespace Tests
             treeBuilder.GetChildren(doc).Should().BeEmpty();
             cleanup.Add(doc);
         }
-    
+
+        [Test]
+        public void TestTreeBuilder_RespectsLimits()
+        {
+            // Create 4 documents
+            for (int i = 0; i < 4; i++)
+            {
+                var doc = TestDataCreator.CreateTestDocument(db);
+                cleanup.Add(doc);
+            }
+
+            var rootCollections = db.ListRootCollectionsAsync().ToListAsync().Result;
+            rootCollections.Count.Should().Be(1);
+
+            // Limit to 2 results fetched
+            var treeBuilder = new FirestoreTreeBuilder(db, 2);
+            var children = treeBuilder.GetChildren(rootCollections[0]).ToList();
+            children.Count.Should().Be(2);
+
+        }
+
+
 
         [Test]
         public void TestNesting_RootBranchLeaf()

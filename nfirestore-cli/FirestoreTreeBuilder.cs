@@ -67,6 +67,8 @@ namespace nfirestore_cli
 
         IEnumerable<DocumentReference> ListDocuments(CollectionReference cr)
         {
+            // TODO: does not work try something like
+            // https://firebase.google.com/docs/firestore/query-data/query-cursors#paginate_a_query
 
             // Construct options with specified page size
             ListDocumentsRequest options = new ListDocumentsRequest
