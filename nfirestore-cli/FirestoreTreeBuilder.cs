@@ -62,14 +62,12 @@ namespace nfirestore_cli
 
         private IEnumerable<CollectionReference> ListCollections(DocumentReference d)
         {
-            var rootDocumentsPath = (string)pDocumentsPath.GetValue(db);
-            return db.Client
-                .ListCollectionIds(d?.Path ?? rootDocumentsPath, null,limit)
-                .Select(id =>db.Collection(id));
+            return d.ListCollectionsAsync().ToListAsync().Result;
         }
 
         IEnumerable<DocumentReference> ListDocuments(CollectionReference cr)
         {
+
             // Construct options with specified page size
             ListDocumentsRequest options = new ListDocumentsRequest
             {
