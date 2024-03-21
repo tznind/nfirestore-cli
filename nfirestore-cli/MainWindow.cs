@@ -8,7 +8,6 @@
 //  </auto-generated>
 // -----------------------------------------------------------------------------
 namespace nfirestore_cli {
-    using Google.Api.Gax;
     using Google.Cloud.Firestore;
     using Google.Cloud.Firestore.V1;
     using Newtonsoft.Json;
@@ -74,10 +73,7 @@ namespace nfirestore_cli {
             }
             try
             {
-                CollectionReference collection = db.Collection("test_nested/level1/level2");
-                var r = new Random();
-
-                collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = r.Next(1900, 2024) }).Wait();
+                TestDataCreator.CreateNestedDocument(db);
                 RefreshTree();
             }
             catch (Exception ex)
@@ -94,12 +90,7 @@ namespace nfirestore_cli {
             }
             try
             {
-
-                CollectionReference collection = db.Collection("test_collection");
-
-                var r = new Random();
-
-                collection.AddAsync(new { Name = new { First = "Ada", Last = "Lovelace" }, Born = r.Next(1900,2024) }).Wait();
+                TestDataCreator.CreateTestDocument(db);
                 RefreshTree();
             }
             catch (Exception ex)
@@ -150,8 +141,8 @@ namespace nfirestore_cli {
 
                 this.db = builder.Build();
 
-                tlvObjects.TreeBuilder = new FirestoreTreeBuilder(this.db);
-                tlvObjects.AspectGetter = AspectGetter;
+                tlvObjects.TreeBuilder = new FirestoreTreeBuilder(this.db, this.options.Limit);
+                tlvObjects.AspectGetter = FirestoreTreePresenter.AspectGetter;
                 tlvObjects.SelectionChanged += TlvObjects_SelectionChanged;
                 
                 RefreshTree();
@@ -168,21 +159,6 @@ namespace nfirestore_cli {
             {
                 ShowDocument(dr);
             }
-        }
-
-        private string AspectGetter(object toRender)
-        {
-            if(toRender is CollectionReference cr)
-            {
-                return cr.Id;
-            }
-
-            if(toRender is DocumentReference dr)
-            {
-                return dr.Id;
-            }
-
-            return "Unknown Object Type";
         }
     }
 }
