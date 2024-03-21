@@ -62,7 +62,7 @@ namespace nfirestore_cli
 
         private IEnumerable<CollectionReference> ListCollections(DocumentReference d)
         {
-            return d.ListCollectionsAsync().ToListAsync().Result;
+            return d.ListCollectionsAsync().Take(limit).ToListAsync().Result;
         }
 
         IEnumerable<DocumentReference> ListDocuments(CollectionReference cr)
@@ -80,9 +80,7 @@ namespace nfirestore_cli
                 Mask = new DocumentMask()
             };
 
-            return db.Client
-                .ListDocuments(options)
-                .Select(doc =>
+            return db.Client.ListDocuments(options).Take(limit).Select(doc =>
                     (DocumentReference)mGetDocumentReferenceFromResourceName.Invoke(db, new[] { doc.Name }));
         }
     }
