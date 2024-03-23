@@ -17,6 +17,10 @@ namespace nfirestore_cli {
     
     public partial class DatabaseSelector : Terminal.Gui.Dialog {
         
+        private Terminal.Gui.ColorScheme redOnBlack;
+        
+        private Terminal.Gui.ColorScheme greenOnBlack;
+        
         private Terminal.Gui.Label label;
         
         private Terminal.Gui.TextField tfProject;
@@ -35,10 +39,19 @@ namespace nfirestore_cli {
         
         private Terminal.Gui.Button btnTest;
         
+        private Terminal.Gui.SpinnerView spinnerView;
+        
         private Terminal.Gui.Button btnExit;
         
+        private Terminal.Gui.Label lblError;
+        
+        private Terminal.Gui.Label lblSuccess;
+        
         private void InitializeComponent() {
+            this.lblSuccess = new Terminal.Gui.Label();
+            this.lblError = new Terminal.Gui.Label();
             this.btnExit = new Terminal.Gui.Button();
+            this.spinnerView = new Terminal.Gui.SpinnerView();
             this.btnTest = new Terminal.Gui.Button();
             this.btnOk = new Terminal.Gui.Button();
             this.label4 = new Terminal.Gui.Label();
@@ -48,6 +61,18 @@ namespace nfirestore_cli {
             this.label2 = new Terminal.Gui.Label();
             this.tfProject = new Terminal.Gui.TextField();
             this.label = new Terminal.Gui.Label();
+            this.redOnBlack = new Terminal.Gui.ColorScheme();
+            this.redOnBlack.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.Red, Terminal.Gui.Color.Black);
+            this.redOnBlack.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightRed, Terminal.Gui.Color.Black);
+            this.redOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Red, Terminal.Gui.Color.Yellow);
+            this.redOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightRed, Terminal.Gui.Color.Yellow);
+            this.redOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Gray, Terminal.Gui.Color.Black);
+            this.greenOnBlack = new Terminal.Gui.ColorScheme();
+            this.greenOnBlack.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.Green, Terminal.Gui.Color.Black);
+            this.greenOnBlack.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightGreen, Terminal.Gui.Color.Black);
+            this.greenOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Green, Terminal.Gui.Color.Magenta);
+            this.greenOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightGreen, Terminal.Gui.Color.Magenta);
+            this.greenOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Gray, Terminal.Gui.Color.Black);
             this.Width = Dim.Percent(65f);
             this.Height = 12;
             this.X = Pos.Center();
@@ -142,6 +167,17 @@ namespace nfirestore_cli {
             this.btnTest.TextAlignment = Terminal.Gui.TextAlignment.Centered;
             this.btnTest.IsDefault = false;
             this.Add(this.btnTest);
+            this.spinnerView.Width = 1;
+            this.spinnerView.Height = 1;
+            this.spinnerView.X = 41;
+            this.spinnerView.Y = 8;
+            this.spinnerView.Visible = true;
+            this.spinnerView.AutoSpin = true;
+            this.spinnerView.Style = new Terminal.Gui.SpinnerStyle.Line();
+            this.spinnerView.Data = "spinnerView";
+            this.spinnerView.Text = "/";
+            this.spinnerView.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.Add(this.spinnerView);
             this.btnExit.Width = 8;
             this.btnExit.Height = 1;
             this.btnExit.X = 52;
@@ -152,6 +188,26 @@ namespace nfirestore_cli {
             this.btnExit.TextAlignment = Terminal.Gui.TextAlignment.Centered;
             this.btnExit.IsDefault = false;
             this.Add(this.btnExit);
+            this.lblError.Width = Dim.Fill(0);
+            this.lblError.Height = 1;
+            this.lblError.X = 0;
+            this.lblError.Y = 9;
+            this.lblError.Visible = false;
+            this.lblError.ColorScheme = this.redOnBlack;
+            this.lblError.Data = "lblError";
+            this.lblError.Text = "lblTestResults";
+            this.lblError.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.Add(this.lblError);
+            this.lblSuccess.Width = Dim.Fill(0);
+            this.lblSuccess.Height = 1;
+            this.lblSuccess.X = 0;
+            this.lblSuccess.Y = 9;
+            this.lblSuccess.Visible = false;
+            this.lblSuccess.ColorScheme = this.greenOnBlack;
+            this.lblSuccess.Data = "lblSuccess";
+            this.lblSuccess.Text = "lblSuccess";
+            this.lblSuccess.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.Add(this.lblSuccess);
         }
     }
 }

@@ -41,6 +41,7 @@ namespace nfirestore_cli {
                 if(!string.IsNullOrWhiteSpace(envValue))
                 {
                     tfEmulator.Text = envValue;
+                    options.EmulatorUrl = envValue;
                 }
             }
             tfEmulator.TextChanged += (s, e) => { options.EmulatorUrl = tfEmulator.Text; };
@@ -56,21 +57,40 @@ namespace nfirestore_cli {
                 Application.RequestStop();
             };
 
+            spinnerView.Visible = false;
 
             btnTest.Clicked += (s, e) =>
             {
-                try
-                {
-                    var factory = new DatabaseFactory();
-                    var db = factory.Create(options);
-                    var rootCollectionsCount = db.ListRootCollectionsAsync().ToListAsync().Result.Count;
 
-                    MessageBox.Query("Success", $"Connected successfully and found {rootCollectionsCount} root collections", "Ok");
-                }
-                catch (Exception ex)
+                spinnerView.Visible = true;
+
+                Task.Run(() =>
                 {
-                    MessageBox.ErrorQuery("Failed", ex.Message, "Ok");
-                }
+                    try
+                    {
+                        var factory = new DatabaseFactory();
+                        var db = factory.Create(options);
+                        var rootCollectionsCount = db.ListRootCollectionsAsync().ToListAsync().Result.Count;
+
+                        Application.Invoke(() =>
+                        {
+                            lblSuccess.Text = "Connected successfully and found {rootCollectionsCount} root collections";
+                            lblSuccess.Visible = true;
+                            lblError.Visible = false;
+                            spinnerView.Visible = false;
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Application.Invoke(() =>
+                        {
+                            lblError.Text = ex.Message;
+                            lblError.Visible = true;
+                            lblSuccess.Visible = false;
+                            spinnerView.Visible = false;
+                        });
+                    }
+                });                
             };
         }
 
