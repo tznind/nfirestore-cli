@@ -20,6 +20,10 @@ namespace nfirestore_cli {
 
         public MainWindow(Options o) {
             InitializeComponent();
+
+            var tiles = new TileView(2);
+
+
             this.options = o;
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
             createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;

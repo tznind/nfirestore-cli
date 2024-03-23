@@ -2,7 +2,6 @@
   "profiles": {
     "nfirestore-cli": {
       "commandName": "Project",
-      "commandLineArgs": "-p dummy-project-id",
       "environmentVariables": {
         "FIRESTORE_EMULATOR_HOST": "localhost:8200"
       }
