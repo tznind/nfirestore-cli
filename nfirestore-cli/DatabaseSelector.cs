@@ -7,18 +7,21 @@
 //      You can make changes to this file and they will not be overwritten when saving.
 //  </auto-generated>
 // -----------------------------------------------------------------------------
-namespace nfirestore_cli {
+namespace nfirestore_cli
+{
     using Terminal.Gui;
 
 
-    public partial class DatabaseSelector {
+    public partial class DatabaseSelector
+    {
 
         public bool Exit { get; private set; }
 
-        public DatabaseSelector(Options options) {
+        public DatabaseSelector(Options options)
+        {
             InitializeComponent();
 
-            if(!string.IsNullOrWhiteSpace(options.Project))
+            if (!string.IsNullOrWhiteSpace(options.Project))
             {
                 tfProject.Text = options.Project;
             }
@@ -30,6 +33,16 @@ namespace nfirestore_cli {
             }
             tfDatabase.TextChanged += (s, e) => { options.Database = tfDatabase.Text; };
 
+            tfMaxResults.Text = options.Limit.ToString();
+
+            tfMaxResults.TextChanged += (s, e) =>
+            {
+                if (int.TryParse(tfMaxResults.Text, out var newLimit))
+                {
+                    options.Limit = newLimit;
+                }
+            };
+
             if (!string.IsNullOrWhiteSpace(options.EmulatorUrl))
             {
                 tfEmulator.Text = options.EmulatorUrl;
@@ -38,7 +51,7 @@ namespace nfirestore_cli {
             {
                 var envValue = Environment.GetEnvironmentVariable(Options.EmulatorEnvVarKey);
 
-                if(!string.IsNullOrWhiteSpace(envValue))
+                if (!string.IsNullOrWhiteSpace(envValue))
                 {
                     tfEmulator.Text = envValue;
                     options.EmulatorUrl = envValue;
@@ -74,7 +87,7 @@ namespace nfirestore_cli {
 
                         Application.Invoke(() =>
                         {
-                            lblSuccess.Text = "Connected successfully and found {rootCollectionsCount} root collections";
+                            lblSuccess.Text = $"Connected successfully and found {rootCollectionsCount} root collections";
                             lblSuccess.Visible = true;
                             lblError.Visible = false;
                             spinnerView.Visible = false;
@@ -84,15 +97,58 @@ namespace nfirestore_cli {
                     {
                         Application.Invoke(() =>
                         {
-                            lblError.Text = ex.Message;
+                            lblError.Text = string.Join('\n',Wrap(ex.Message, lblError.Bounds.Width));
                             lblError.Visible = true;
                             lblSuccess.Visible = false;
                             spinnerView.Visible = false;
                         });
                     }
-                });                
+                });
             };
         }
+
+        /// <summary>
+        /// Returns a list of strings no larger than the max length sent in.
+        /// </summary>
+        /// <remarks>useful function used to wrap string text for reporting.</remarks>
+        /// <param name="text">Text to be wrapped into of List of Strings</param>
+        /// <param name="maxLength">Max length you want each line to be.</param>
+        /// <returns>List of Strings</returns>
+        private static List<String> Wrap(string text, int maxLength)
+        {
+            // Return empty list of strings if the text was empty
+            if (text.Length == 0) return new List<string>();
+            
+            var words = text.Split(' ');
+
+            var lines = new List<string>();
+
+            var currentLine = "";
+
+            foreach (var currentWord in words)
+            {
+                if ((currentLine.Length > maxLength) ||
+                    ((currentLine.Length + currentWord.Length) > maxLength))
+
+                {
+                    lines.Add(currentLine);
+                    currentLine = "";
+                }
+
+                if (currentLine.Length > 0)
+                    currentLine += " " + currentWord;
+                else
+                    currentLine += currentWord;
+            }
+
+
+            if (currentLine.Length > 0)
+                lines.Add(currentLine);
+
+            return lines;
+
+        }
+
 
     }
 }
