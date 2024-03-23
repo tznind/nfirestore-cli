@@ -82,7 +82,7 @@ namespace nfirestore_cli {
             this.greenOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Green, Terminal.Gui.Color.Magenta);
             this.greenOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightGreen, Terminal.Gui.Color.Magenta);
             this.greenOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Gray, Terminal.Gui.Color.Black);
-            this.Width = Dim.Percent(65f);
+            this.Width = Dim.Fill();
             this.Height = 16;
             this.X = Pos.Center();
             this.Y = Pos.Center();
@@ -149,7 +149,7 @@ namespace nfirestore_cli {
             this.Add(this.tfEmulator);
             this.label4.Width = 4;
             this.label4.Height = 1;
-            this.label4.X = 30;
+            this.label4.X = 0;
             this.label4.Y = 6;
             this.label4.Visible = true;
             this.label4.Data = "label4";
@@ -177,7 +177,7 @@ namespace nfirestore_cli {
             this.Add(this.tfMaxResults);
             this.label6.Width = 4;
             this.label6.Height = 1;
-            this.label6.X = 15;
+            this.label6.X = 0;
             this.label6.Y = 8;
             this.label6.Visible = true;
             this.label6.Data = "label6";

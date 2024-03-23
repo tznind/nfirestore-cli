@@ -21,6 +21,9 @@ namespace nfirestore_cli
         {
             InitializeComponent();
 
+            this.label6.X = Pos.AnchorEnd(label6.Text.Length);
+            this.label4.X = Pos.AnchorEnd(label4.Text.Length);
+
             if (!string.IsNullOrWhiteSpace(options.Project))
             {
                 tfProject.Text = options.Project;
