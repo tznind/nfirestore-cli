@@ -20,6 +20,11 @@ namespace nfirestore_cli
                 Environment.SetEnvironmentVariable(Options.EmulatorEnvVarKey, options.EmulatorUrl);
                 emulatorDetection = Google.Api.Gax.EmulatorDetection.EmulatorOnly;
             }
+            else
+            {
+                Environment.SetEnvironmentVariable(Options.EmulatorEnvVarKey, null);
+
+            }
 
             var builder = new FirestoreDbBuilder
             {

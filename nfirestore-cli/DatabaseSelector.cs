@@ -22,11 +22,13 @@ namespace nfirestore_cli {
             {
                 tfProject.Text = options.Project;
             }
+            tfProject.TextChanged += (s, e) => { options.Project = tfProject.Text; };
 
             if (!string.IsNullOrWhiteSpace(options.Database))
             {
                 tfDatabase.Text = options.Database;
             }
+            tfDatabase.TextChanged += (s, e) => { options.Database = tfDatabase.Text; };
 
             if (!string.IsNullOrWhiteSpace(options.EmulatorUrl))
             {
@@ -41,6 +43,7 @@ namespace nfirestore_cli {
                     tfEmulator.Text = envValue;
                 }
             }
+            tfEmulator.TextChanged += (s, e) => { options.EmulatorUrl = tfEmulator.Text; };
 
             btnOk.Clicked += (s, e) =>
             {
