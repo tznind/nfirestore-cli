@@ -9,41 +9,65 @@
 // -----------------------------------------------------------------------------
 namespace nfirestore_cli {
     using Google.Cloud.Firestore;
-    using Google.Cloud.Firestore.V1;
     using Newtonsoft.Json;
     using Terminal.Gui;
     
     
     public partial class MainWindow {
         private readonly Options options;
-        private FirestoreDb db;
+        TextView textViewData;
+        private TileView tiles;
+        private NavigationPane navigation;
 
         public MainWindow(Options o) {
             InitializeComponent();
+
+            tiles = new TileView(2)
+            {
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                Y = 1
+            };
+            tiles.LineStyle = LineStyle.Single;
+
+            navigation = new NavigationPane(this);
+
+            tiles.Tiles.ElementAt(0).Title = "Collections";
+            tiles.Tiles.ElementAt(0).ContentView.Add(navigation);
+
+            tiles.Tiles.ElementAt(1).Title = "Document";
+
+            textViewData = new TextView()
+            {
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                AllowsTab = false,
+            };
+
+            SetDocumentTitle("Document");
+            tiles.Tiles.ElementAt(1).ContentView.Add(textViewData);
+            this.Add(tiles);
+            
             this.options = o;
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
             createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;
-            textField.KeyDown += TextField_KeyDown;
             exitMenuItem.Action = ()=>Application.RequestStop();
         }
 
-        private void TextField_KeyDown(object sender, Key e)
+        private void SetDocumentTitle(string value)
         {
-            if(e.KeyCode == Key.Enter)
-            {
-                ShowDocument(textField.Text);
-            }
+            tiles.Tiles.ElementAt(1).Title = value;
         }
 
-        private void ShowDocument(string text)
+        public void ShowDocument(string text)
         {
-            if(db == null || string.IsNullOrWhiteSpace(text))
+            if(navigation.Db == null || string.IsNullOrWhiteSpace(text))
             {
                 return;
             }
             try
             {
-                ShowDocument(db.Document(text));
+                ShowDocument(navigation.Db.Document(text));
             }
             catch (Exception ex)
             {
@@ -51,12 +75,12 @@ namespace nfirestore_cli {
             }
         }
 
-        private void ShowDocument(DocumentReference dr)
+        public void ShowDocument(DocumentReference dr)
         {
             try
             {
                 var snap = dr.GetSnapshotAsync().Result;
-                frameViewData.Title = "Data - " + dr.Id;
+                SetDocumentTitle("Data - " + dr.Id);
                 textViewData.Text = JsonConvert.SerializeObject(snap.ToDictionary(), Formatting.Indented);
             }
             catch (Exception ex)
@@ -67,14 +91,10 @@ namespace nfirestore_cli {
 
         private void CreateNestedTestDocuments()
         {
-            if (db == null)
-            {
-                return;
-            }
             try
             {
-                TestDataCreator.CreateNestedDocument(db);
-                RefreshTree();
+                TestDataCreator.CreateNestedDocument(navigation.Db);
+                navigation.RefreshTree();
             }
             catch (Exception ex)
             {
@@ -84,14 +104,14 @@ namespace nfirestore_cli {
 
         private void CreateTestDocuments()
         {
-            if(db == null)
+            if(navigation.Db == null)
             {
                 return;
             }
             try
             {
-                TestDataCreator.CreateTestDocument(db);
-                RefreshTree();
+                TestDataCreator.CreateTestDocument(navigation.Db);
+                navigation.RefreshTree();
             }
             catch (Exception ex)
             {
@@ -99,28 +119,8 @@ namespace nfirestore_cli {
             }
         }
 
-        private void RefreshTree()
-        {
-            if(db == null)
-            {
-                return;
-            }
-            try
-            {
-                tlvObjects.ClearObjects();
-                var collections = db.ListRootCollectionsAsync().ToArrayAsync().Result;
-                if(collections.Length > 0)
-                {
-                    tlvObjects.AddObjects(collections);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowException(ex);
-            }
-        }
 
-        private void ShowException(Exception ex)
+        public void ShowException(Exception ex)
         {
             MessageBox.ErrorQuery("Error", ex.Message, "Close");
         }
@@ -129,36 +129,8 @@ namespace nfirestore_cli {
         {
             base.OnLoaded();
 
-            var emu = Environment.GetEnvironmentVariable("FIRESTORE_EMULATOR_HOST");
-
-            try
-            {
-                var builder = new FirestoreDbBuilder
-                {
-                    ProjectId = options.Project,
-                    EmulatorDetection = Google.Api.Gax.EmulatorDetection.EmulatorOrProduction
-                };
-
-                this.db = builder.Build();
-
-                tlvObjects.TreeBuilder = new FirestoreTreeBuilder(this.db, this.options.Limit);
-                tlvObjects.AspectGetter = FirestoreTreePresenter.AspectGetter;
-                tlvObjects.SelectionChanged += TlvObjects_SelectionChanged;
-                
-                RefreshTree();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.ErrorQuery("Error Loading", $"{ex.Message}{Environment.NewLine}{Environment.NewLine}Emulator Variable is:{(string.IsNullOrWhiteSpace(emu) ? "missing":emu)}", "Close");
-            }
+            navigation.SetDatabase(options);
         }
 
-        private void TlvObjects_SelectionChanged(object sender, SelectionChangedEventArgs<object> e)
-        {
-            if(tlvObjects.SelectedObject is DocumentReference dr)
-            {
-                ShowDocument(dr);
-            }
-        }
     }
 }

@@ -11,7 +11,20 @@ public class MainProgram
                {
                    Application.Init();
 
-                   Application.Run(new nfirestore_cli.MainWindow(o));
+                   DatabaseSelector? selector = null;
+
+                   if (!o.IsFullyPopulated())
+                   {
+                       selector = new DatabaseSelector(o);
+                       Application.Run(selector);
+                   }
+
+                   if(selector?.Exit ?? false)
+                   {
+                       return;
+                   }
+
+                   Application.Run(new MainWindow(o));
 
                    Application.Shutdown();
 
