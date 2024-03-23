@@ -7,8 +7,9 @@ It is based on [firestore-cli](https://github.com/Ion-manden/firestore-cli/tree/
 Expanded functionality includes
 
 - Support for nested collections
-
-![firestore-tui](https://github.com/tznind/nfirestore-cli/assets/31306100/40e1737e-0dac-491a-ba4f-e6967e6ceb09)
+- Configurable query limit (defaults to 100)
+  
+![firestore-tui2](https://github.com/tznind/nfirestore-cli/assets/31306100/e34902c2-0830-4f63-959c-64171142c7bf)
 
 ## Running Program
 Enter the project root and run
