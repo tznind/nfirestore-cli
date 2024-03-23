@@ -12,15 +12,16 @@ Expanded functionality includes
 ![firestore-tui2](https://github.com/tznind/nfirestore-cli/assets/31306100/e34902c2-0830-4f63-959c-64171142c7bf)
 
 ## Running Program
-Enter the project root and run
+Enter the project root and start the firestore emulator:
 
 ```
 docker-compose up
-export FIRESTORE_EMULATOR_HOST=localhost:8200
-dotnet run --project ./nfirestore-cli/nfirestore-cli.csproj -- -p dummy_project
 ```
 
-If using Powershell instead of linux, set your env var as follows:
+Build and run the program
+
 ```
-$Env:FIRESTORE_EMULATOR_HOST = 'localhost:8200'
+cd .\nfirestore-cli\
+dotnet run
 ```
+
