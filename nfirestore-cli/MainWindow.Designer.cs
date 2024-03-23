@@ -19,18 +19,6 @@ namespace nfirestore_cli {
         
         private Terminal.Gui.ColorScheme tgDefault;
         
-        private Terminal.Gui.FrameView frameViewObjects;
-        
-        private Terminal.Gui.TreeView<object> tlvObjects;
-        
-        private Terminal.Gui.FrameView frameViewData;
-        
-        private Terminal.Gui.TextView textViewData;
-        
-        private Terminal.Gui.FrameView frameViewDocuments;
-        
-        private Terminal.Gui.TextField textField;
-        
         private Terminal.Gui.MenuBar menuBar;
         
         private Terminal.Gui.MenuBarItem fileF9Menu;
@@ -45,12 +33,6 @@ namespace nfirestore_cli {
         
         private void InitializeComponent() {
             this.menuBar = new Terminal.Gui.MenuBar();
-            this.textField = new Terminal.Gui.TextField();
-            this.frameViewDocuments = new Terminal.Gui.FrameView();
-            this.textViewData = new Terminal.Gui.TextView();
-            this.frameViewData = new Terminal.Gui.FrameView();
-            this.tlvObjects = new Terminal.Gui.TreeView<object>();
-            this.frameViewObjects = new Terminal.Gui.FrameView();
             this.tgDefault = new Terminal.Gui.ColorScheme();
             this.tgDefault.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.White, Terminal.Gui.Color.Blue);
             this.tgDefault.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightCyan, Terminal.Gui.Color.Blue);
@@ -65,70 +47,6 @@ namespace nfirestore_cli {
             this.ColorScheme = this.tgDefault;
             this.Modal = false;
             this.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameViewObjects.Width = 30;
-            this.frameViewObjects.Height = Dim.Fill(4);
-            this.frameViewObjects.X = 0;
-            this.frameViewObjects.Y = 1;
-            this.frameViewObjects.Visible = true;
-            this.frameViewObjects.Data = "frameViewObjects";
-            this.frameViewObjects.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameViewObjects.Title = "Collections/Documents";
-            this.Add(this.frameViewObjects);
-            this.tlvObjects.Width = 28;
-            this.tlvObjects.Height = 36;
-            this.tlvObjects.X = 0;
-            this.tlvObjects.Y = 0;
-            this.tlvObjects.Visible = true;
-            this.tlvObjects.Data = "tlvObjects";
-            this.tlvObjects.Text = "Test";
-            this.tlvObjects.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.tlvObjects.Style.CollapseableSymbol = new System.Text.Rune('-');
-            this.tlvObjects.Style.ColorExpandSymbol = false;
-            this.tlvObjects.Style.ExpandableSymbol = new System.Text.Rune('+');
-            this.tlvObjects.Style.InvertExpandSymbolColors = false;
-            this.tlvObjects.Style.LeaveLastRow = false;
-            this.tlvObjects.Style.ShowBranchLines = true;
-            this.frameViewObjects.Add(this.tlvObjects);
-            this.frameViewData.Width = Dim.Fill(0);
-            this.frameViewData.Height = Dim.Fill(1);
-            this.frameViewData.X = Pos.Right(frameViewObjects);
-            this.frameViewData.Y = 1;
-            this.frameViewData.Visible = true;
-            this.frameViewData.Data = "frameViewData";
-            this.frameViewData.TextAlignment = Terminal.Gui.TextAlignment.Centered;
-            this.frameViewData.Title = "Data";
-            this.Add(this.frameViewData);
-            this.textViewData.Width = Dim.Fill(0);
-            this.textViewData.Height = Dim.Fill(0);
-            this.textViewData.X = 0;
-            this.textViewData.Y = 0;
-            this.textViewData.Visible = true;
-            this.textViewData.AllowsTab = false;
-            this.textViewData.AllowsReturn = true;
-            this.textViewData.WordWrap = false;
-            this.textViewData.Data = "textViewData";
-            this.textViewData.Text = "";
-            this.textViewData.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameViewData.Add(this.textViewData);
-            this.frameViewDocuments.Width = 30;
-            this.frameViewDocuments.Height = 3;
-            this.frameViewDocuments.X = 0;
-            this.frameViewDocuments.Y = Pos.Bottom(frameViewObjects);
-            this.frameViewDocuments.Visible = true;
-            this.frameViewDocuments.Data = "frameViewDocuments";
-            this.frameViewDocuments.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameViewDocuments.Title = "Document Lookup";
-            this.Add(this.frameViewDocuments);
-            this.textField.Width = Dim.Fill(0);
-            this.textField.Height = 1;
-            this.textField.X = 0;
-            this.textField.Y = 0;
-            this.textField.Visible = true;
-            this.textField.Secret = false;
-            this.textField.Data = "textField";
-            this.textField.Text = "";
-            this.textField.TextAlignment = Terminal.Gui.TextAlignment.Left;
-            this.frameViewDocuments.Add(this.textField);
             this.menuBar.Width = Dim.Fill(0);
             this.menuBar.Height = 1;
             this.menuBar.X = 0;
