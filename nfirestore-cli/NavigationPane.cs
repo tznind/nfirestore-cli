@@ -67,6 +67,7 @@ namespace nfirestore_cli {
                 treeView1.TreeBuilder = new FirestoreTreeBuilder(this.Db, options.Limit);
                 treeView1.AspectGetter = FirestoreTreePresenter.AspectGetter;
                 treeView1.SelectionChanged += TlvObjects_SelectionChanged;
+                treeView1.KeyUp += TreeView1_KeyUp;
 
                 RefreshTree();
             }
@@ -76,11 +77,22 @@ namespace nfirestore_cli {
             }
         }
 
+        private void TreeView1_KeyUp(object sender, Key e)
+        {
+            if(e.KeyCode == KeyCode.Enter)
+            {
+                if (treeView1.SelectedObject is DocumentReference dr)
+                {
+                    MainWindow.ShowDocument(dr, true);
+                }
+            }
+        }
+
         private void TlvObjects_SelectionChanged(object sender, SelectionChangedEventArgs<object> e)
         {
             if (treeView1.SelectedObject is DocumentReference dr)
             {
-                MainWindow.ShowDocument(dr);
+                MainWindow.ShowDocument(dr, false);
             }
         }
     }

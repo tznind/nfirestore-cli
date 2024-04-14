@@ -9,15 +9,14 @@
 // -----------------------------------------------------------------------------
 namespace nfirestore_cli {
     using Google.Cloud.Firestore;
-    using Newtonsoft.Json;
     using Terminal.Gui;
     
     
     public partial class MainWindow {
         private readonly Options options;
-        TextView textViewData;
         private TileView tiles;
         private NavigationPane navigation;
+        private TabsPane tabs;
 
         public MainWindow(Options o) {
             InitializeComponent();
@@ -37,15 +36,14 @@ namespace nfirestore_cli {
 
             tiles.Tiles.ElementAt(1).Title = "Document";
 
-            textViewData = new TextView()
+            tabs = new TabsPane()
             {
                 Width = Dim.Fill(),
-                Height = Dim.Fill(),
-                AllowsTab = false,
+                Height = Dim.Fill()
             };
 
             SetDocumentTitle("Document");
-            tiles.Tiles.ElementAt(1).ContentView.Add(textViewData);
+            tiles.Tiles.ElementAt(1).ContentView.Add(tabs);
             this.Add(tiles);
             
             this.options = o;
@@ -67,7 +65,7 @@ namespace nfirestore_cli {
             }
             try
             {
-                ShowDocument(navigation.Db.Document(text));
+                ShowDocument(navigation.Db.Document(text),false);
             }
             catch (Exception ex)
             {
@@ -75,13 +73,13 @@ namespace nfirestore_cli {
             }
         }
 
-        public void ShowDocument(DocumentReference dr)
+        public void ShowDocument(DocumentReference dr, bool inNewTab)
         {
             try
             {
                 var snap = dr.GetSnapshotAsync().Result;
                 SetDocumentTitle("Data - " + dr.Id);
-                textViewData.Text = JsonConvert.SerializeObject(snap.ToDictionary(), Formatting.Indented);
+                tabs.OpenDocument(snap, inNewTab);
             }
             catch (Exception ex)
             {
