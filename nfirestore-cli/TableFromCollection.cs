@@ -1,6 +1,9 @@
-﻿using Google.Cloud.Firestore;
+﻿using CsvHelper.Configuration;
+using CsvHelper;
+using Google.Cloud.Firestore;
 using Newtonsoft.Json;
 using System.Collections;
+using System.Globalization;
 using Terminal.Gui;
 
 namespace nfirestore_cli
@@ -47,5 +50,34 @@ namespace nfirestore_cli
                     return val;
                 }
             }
+
+        internal void WriteTo(Stream stream)
+        {
+
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                NewLine = Environment.NewLine,
+            };
+
+            using (var csv = new CsvWriter(new StreamWriter(stream), config))
+            {
+                foreach (var header in _columns)
+                {
+                    csv.WriteField(header);
+                }
+                csv.NextRecord();
+
+
+                for (int r = 0; r < Rows; r++)
+                {
+                    for (int c = 0; c < Columns; c++)
+                    {
+                        csv.WriteField(this[r,c]);
+                    }
+
+                    csv.NextRecord();
+                }
+            }
+        }
     }
 }

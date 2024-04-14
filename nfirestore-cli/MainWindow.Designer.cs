@@ -23,6 +23,8 @@ namespace nfirestore_cli {
         
         private Terminal.Gui.MenuBarItem fileF9Menu;
         
+        private Terminal.Gui.MenuItem saveAsMenuItem;
+        
         private Terminal.Gui.MenuItem exitMenuItem;
         
         private Terminal.Gui.MenuBarItem testMenu;
@@ -56,10 +58,14 @@ namespace nfirestore_cli {
             this.menuBar.TextAlignment = Terminal.Gui.TextAlignment.Left;
             this.fileF9Menu = new Terminal.Gui.MenuBarItem();
             this.fileF9Menu.Title = "_File (F9)";
+            this.saveAsMenuItem = new Terminal.Gui.MenuItem();
+            this.saveAsMenuItem.Title = "Save As...";
+            this.saveAsMenuItem.Data = "saveAsMenuItem";
             this.exitMenuItem = new Terminal.Gui.MenuItem();
             this.exitMenuItem.Title = "Exit";
             this.exitMenuItem.Data = "exitMenuItem";
             this.fileF9Menu.Children = new Terminal.Gui.MenuItem[] {
+                    this.saveAsMenuItem,
                     this.exitMenuItem};
             this.testMenu = new Terminal.Gui.MenuBarItem();
             this.testMenu.Title = "Test";

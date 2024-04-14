@@ -49,8 +49,10 @@ namespace nfirestore_cli {
             this.options = o;
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
             createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;
+            saveAsMenuItem.Action = tabs.SaveAs;
             exitMenuItem.Action = ()=>Application.RequestStop();
         }
+
 
         private void SetDocumentTitle(string value)
         {

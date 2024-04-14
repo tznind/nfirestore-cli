@@ -94,5 +94,14 @@ namespace nfirestore_cli {
             openTabs.Add(ct);
             tabView.AddTab(ct.Tab, true);
         }
+
+        internal void SaveAs()
+        {
+            var selected = openTabs.FirstOrDefault(kvp => kvp.Tab == this.tabView.SelectedTab);
+            if(selected is IFirestoreTab)
+            {
+                selected.SaveAs();
+            }
+        }
     }
 }

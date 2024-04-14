@@ -8,5 +8,6 @@ namespace nfirestore_cli.Tabs
         public Tab Tab { get; }
         public bool Is(DocumentReference dr);
         public bool Is(CollectionReference cr);
+        void SaveAs();
     }
 }

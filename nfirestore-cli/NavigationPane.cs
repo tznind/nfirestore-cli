@@ -27,7 +27,7 @@ namespace nfirestore_cli {
 
         private void TextField_KeyDown(object sender, Key e)
         {
-            if (e.KeyCode == Key.Enter)
+            if (e.KeyCode == Key.Enter && !e.Handled)
             {
                 MainWindow.ShowDocument(tfLookup.Text);
             }
@@ -79,7 +79,7 @@ namespace nfirestore_cli {
 
         private void TreeView1_KeyUp(object sender, Key e)
         {
-            if(e.KeyCode == KeyCode.Enter)
+            if(e.KeyCode == KeyCode.Enter && !e.Handled)
             {
                 if (treeView1.SelectedObject is DocumentReference dr)
                 {

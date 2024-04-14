@@ -16,6 +16,29 @@ namespace nfirestore_cli.Tabs
 
         public abstract bool Is(CollectionReference cr);
 
+        public void SaveAs()
+        {
+            var sd = new SaveDialog("Save As");
+
+            sd.Path = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                GetFilename());
+
+            Application.Run(sd);
+
+            if(!sd.Canceled)
+            {
+                using (var stream = File.OpenWrite(sd.Path))
+                {
+                    WriteFileContents(stream);
+                }
+                    
+            }
+        }
+
+        protected abstract void WriteFileContents(Stream stream);
+        protected abstract string GetFilename();
+
         protected void SetTab(string name, View view)
         {
             Tab = new Tab()

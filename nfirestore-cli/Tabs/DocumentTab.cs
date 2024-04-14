@@ -8,11 +8,13 @@ namespace nfirestore_cli.Tabs
     {
         public DocumentReference DocumentReference { get; }
 
+        private TextView textView;
+
         public DocumentTab(DocumentSnapshot snap)
         {
             this.DocumentReference = snap.Reference;
 
-            var view = new TextView
+            textView = new TextView
             {
                 Width = Dim.Fill(),
                 Height = Dim.Fill(),
@@ -21,9 +23,9 @@ namespace nfirestore_cli.Tabs
                 Multiline = true,
             };
 
-            OpenDocumentIn(view, snap);
+            OpenDocumentIn(textView, snap);
 
-            SetTab(snap.Id, view);
+            SetTab(snap.Id, textView);
         }
 
         internal static void OpenDocumentIn(TextView currentDocumentTextView, DocumentSnapshot snap)
@@ -39,6 +41,19 @@ namespace nfirestore_cli.Tabs
         public override bool Is(CollectionReference cr)
         {
             return false;
+        }
+
+        protected override void WriteFileContents(Stream stream)
+        {
+            using (var tw = new StreamWriter(stream))
+            {
+                tw.Write(textView.Text);
+            }
+        }
+
+        protected override string GetFilename()
+        {
+            return DocumentReference.Id + ".json";
         }
     }
 }
