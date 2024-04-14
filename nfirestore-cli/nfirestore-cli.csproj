@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="CsvHelper" Version="31.0.3" />
     <PackageReference Include="Google.Cloud.Firestore" Version="3.5.1" />
 	  <PackageReference Include="Terminal.Gui" Version="2.0.0-pre.250" />
   </ItemGroup>
