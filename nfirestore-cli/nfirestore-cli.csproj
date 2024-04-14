@@ -14,7 +14,7 @@
 	<PackageOutputPath>./nupkg</PackageOutputPath>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<PackageId>nfirestore-cli</PackageId>
-	<Version>1.0.2</Version>
+	<Version>1.0.3</Version>
 	<Authors>Thomas Nind</Authors>
 	<Nullable>enable</Nullable>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -27,7 +27,7 @@
 	<PackageIcon>logo.png</PackageIcon>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageReleaseNotes>
-		v1.0.2
+		v1.0.3
 		* Support for opening multiple documents/collections at once (tabs)
 		v1.0.1
 		* Readme improvements
