@@ -1,4 +1,6 @@
 ﻿using Google.Cloud.Firestore;
+using Newtonsoft.Json;
+using System.Collections;
 using Terminal.Gui;
 
 namespace nfirestore_cli
@@ -15,7 +17,9 @@ namespace nfirestore_cli
         {
             Collection = cr;
             _snaps = docs.ToDictionary(k => k, d => d.GetSnapshotAsync().Result.ToDictionary()).ToList();
-            _columns = _snaps.SelectMany(k=>k.Value.Keys).ToArray();
+            var cols = _snaps.SelectMany(k=>k.Value.Keys).Distinct().Order().ToList();
+            cols.Insert(0, "Id");
+            _columns = cols.ToArray();
         }
 
         public int Rows => _snaps.Count;
@@ -26,11 +30,22 @@ namespace nfirestore_cli
 
         public object this[int row, int col] {
                 get {
-                var colName = _columns[col];
+                    var colName = _columns[col];
 
-                return _snaps[row].Value.ContainsKey(colName) ? _snaps[row].Value[colName] : null;
-            }
-            }
+                    if(col == 0)
+                    {
+                        return _snaps[row].Key.Id;
+                    }
 
+                    var val = _snaps[row].Value.ContainsKey(colName) ? _snaps[row].Value[colName] : null;
+
+                    if (val is IDictionary)
+                    {
+                        val = JsonConvert.SerializeObject(val);
+                    }
+
+                    return val;
+                }
+            }
     }
 }

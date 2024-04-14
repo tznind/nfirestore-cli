@@ -55,7 +55,7 @@ namespace nfirestore_cli {
             this.currentDocumentTextView.WordWrap = false;
             this.currentDocumentTextView.Multiline = true;
             this.currentDocumentTextView.Data = "currentDocumentTextView";
-            this.currentDocumentTextView.Text = "Heya";
+            this.currentDocumentTextView.Text = "";
             this.currentDocumentTextView.TextAlignment = Terminal.Gui.TextAlignment.Left;
             tabViewselected.View.Add(this.currentDocumentTextView);
             tabView.AddTab(tabViewselected, false);
