@@ -10,6 +10,7 @@
 namespace nfirestore_cli {
     using Google.Cloud.Firestore;
     using Newtonsoft.Json;
+    using nfirestore_cli.Tabs;
     using System;
     using System.Collections.Generic;
     using Terminal.Gui;
@@ -23,10 +24,7 @@ namespace nfirestore_cli {
             this.tabView.TabClicked += TabView_TabClicked;
         }
 
-        /// <summary>
-        /// Open <see cref="DocumentReference"/> or <see cref="CollectionReference"/>
-        /// </summary>
-        Dictionary<object, Tab> openTabs = new Dictionary<object, Tab>();
+        List<IFirestoreTab> openTabs = new ();
 
         private void TabView_TabClicked(object sender, TabMouseEventArgs e)
         {
@@ -41,12 +39,12 @@ namespace nfirestore_cli {
 
         private bool CloseTab(Tab tab)
         {
-            var kvp = openTabs.FirstOrDefault(kvp => kvp.Value == tab);
+            var found = openTabs.FirstOrDefault(kvp => kvp.Tab == tab);
 
             // if we can close it
-            if (kvp.Value != default(Tab))
+            if (found != null)
             {
-                openTabs.Remove(kvp.Key);
+                openTabs.Remove(found);
                 tabView.RemoveTab(tab);
                 tabView.SetNeedsDisplay();
                 return true;
@@ -59,91 +57,42 @@ namespace nfirestore_cli {
         {
             if(newTab)
             {
+                var existing = openTabs.FirstOrDefault(kvp => kvp.Is(snap.Reference));
+
                 // If document is already open in another tab
-                if (openTabs.ContainsKey(snap.Reference))
+                if (existing != null)
                 {
                     // switch to it
-                    tabView.SelectedTab = openTabs[snap.Reference];
+                    tabView.SelectedTab = existing.Tab;
                     return;
                 }
 
-                var name = GetTabName(snap);
-                var view = new TextView
-                {
-                    Width = Dim.Fill(),
-                    Height = Dim.Fill(),
-                    WordWrap = false,
-                    AllowsReturn = false,
-                    Multiline = true,
-                };
+                var dt = new DocumentTab(snap);
+                openTabs.Add(dt);
+                tabView.AddTab(dt.Tab, true);
 
-                var tab = new Tab()
-                {
-                    Text = name,
-                    View = view
-                };
-
-                tabView.AddTab(tab, true);
-                openTabs.Add(snap.Reference, tab);
-                OpenDocumentIn(view, snap);
             }
             else
             {
-                OpenDocumentIn(currentDocumentTextView, snap);
+                DocumentTab.OpenDocumentIn(currentDocumentTextView, snap);
             }
-        }
-
-        private string GetTabName(DocumentSnapshot snap)
-        {
-            return GetTabName(snap.Id);
-        }
-        private string GetTabName(CollectionReference cr)
-        {
-            return GetTabName(cr.Id);
-        }
-
-        private string GetTabName(string name)
-        {
-            if (name.Length > 8)
-            {
-                name = name.Substring(0, 6) + "…";
-            }
-
-            return "[X]" + name;
-        }
-
-        private void OpenDocumentIn(TextView currentDocumentTextView, DocumentSnapshot snap)
-        {
-            currentDocumentTextView.Text = JsonConvert.SerializeObject(snap.ToDictionary(), Formatting.Indented);
         }
 
         internal void OpenCollection(CollectionReference cr, IEnumerable<DocumentReference> children)
         {
+            var existing = openTabs.FirstOrDefault(kvp => kvp.Is(cr));
 
             // If collection is already open in another tab
-            if (openTabs.ContainsKey(cr))
+            if (existing != null)
             {
                 // switch to it
-                tabView.SelectedTab = openTabs[cr];
+                tabView.SelectedTab = existing.Tab;
                 return;
             }
 
-            var name = GetTabName(cr);
-            var view = new TableView
-            {
-                Width = Dim.Fill(),
-                Height = Dim.Fill(),
-                Table = new TableFromCollection(cr, children)
-            };
-
-            var tab = new Tab()
-            {
-                Text = name,
-                View = view
-            };
-
-            tabView.AddTab(tab, true);
-            openTabs.Add(cr, tab);
+            var ct = new CollectionTab(cr, children);
+            openTabs.Add(ct);
+            tabView.AddTab(ct.Tab, true);
         }
     }
 }
