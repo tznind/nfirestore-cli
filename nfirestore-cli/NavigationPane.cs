@@ -27,7 +27,7 @@ namespace nfirestore_cli {
 
         private void TextField_KeyDown(object sender, Key e)
         {
-            if (e.KeyCode == Key.Enter)
+            if (e.KeyCode == Key.Enter && !e.Handled)
             {
                 MainWindow.ShowDocument(tfLookup.Text);
             }
@@ -67,6 +67,7 @@ namespace nfirestore_cli {
                 treeView1.TreeBuilder = new FirestoreTreeBuilder(this.Db, options.Limit);
                 treeView1.AspectGetter = FirestoreTreePresenter.AspectGetter;
                 treeView1.SelectionChanged += TlvObjects_SelectionChanged;
+                treeView1.KeyUp += TreeView1_KeyUp;
 
                 RefreshTree();
             }
@@ -76,11 +77,27 @@ namespace nfirestore_cli {
             }
         }
 
+        private void TreeView1_KeyUp(object sender, Key e)
+        {
+            if(e.KeyCode == KeyCode.Enter && !e.Handled)
+            {
+                if (treeView1.SelectedObject is DocumentReference dr)
+                {
+                    MainWindow.ShowDocument(dr, true);
+                }
+
+                if (treeView1.SelectedObject is CollectionReference cr)
+                {
+                    MainWindow.OpenCollection(cr, treeView1.TreeBuilder.GetChildren(cr).OfType<DocumentReference>());
+                }
+            }
+        }
+
         private void TlvObjects_SelectionChanged(object sender, SelectionChangedEventArgs<object> e)
         {
             if (treeView1.SelectedObject is DocumentReference dr)
             {
-                MainWindow.ShowDocument(dr);
+                MainWindow.ShowDocument(dr, false);
             }
         }
     }
