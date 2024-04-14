@@ -9,6 +9,8 @@ Expanded functionality includes
 - Support for nested collections
 - Configurable query limit (defaults to 100)
   
+![demo gif](https://github.com/tznind/nfirestore-cli/assets/31306100/e34902c2-0830-4f63-959c-64171142c7bf)
+
 ## Install and Run
 
 Install the tool by running
@@ -36,8 +38,6 @@ gcloud auth application-default login
 nfirestore-cli -p my-project
 gcloud auth application-default revoke
 ```
-
-![demo gif](https://github.com/tznind/nfirestore-cli/assets/31306100/e34902c2-0830-4f63-959c-64171142c7bf)
 
 ## Update/Remove
 
