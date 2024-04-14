@@ -10,16 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="TestDataCreator.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TestDataCreator.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Include="..\README.md" Link="README.md" />
   </ItemGroup>
 
