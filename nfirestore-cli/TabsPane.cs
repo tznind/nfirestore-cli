@@ -18,12 +18,48 @@ namespace nfirestore_cli {
         
         public TabsPane() {
             InitializeComponent();
+
+            this.tabView.TabClicked += TabView_TabClicked;
+        }
+
+        Dictionary<DocumentReference, Tab> openTabs = new Dictionary<DocumentReference, Tab>();
+
+        private void TabView_TabClicked(object sender, TabMouseEventArgs e)
+        {
+            // Middle mouse click in tab
+            if(e.MouseEvent.Flags == MouseFlags.Button2Clicked)
+            {
+                CloseTab(e.Tab);
+            }
+
+            // TODO: work out the offset within the tab to support clicking the [X]
+        }
+
+        private void CloseTab(Tab tab)
+        {
+            var kvp = openTabs.FirstOrDefault(kvp => kvp.Value == tab);
+
+            // if we can close it
+            if (kvp.Value != default(Tab))
+            {
+                openTabs.Remove(kvp.Key);
+                tabView.RemoveTab(tab);
+                tabView.SetNeedsDisplay();
+            }
         }
 
         internal void OpenDocument(DocumentSnapshot snap, bool newTab)
         {
             if(newTab)
             {
+                // If document is already open in another tab
+                if (openTabs.ContainsKey(snap.Reference))
+                {
+                    // switch to it
+                    tabView.SelectedTab = openTabs[snap.Reference];
+                    return;
+                }
+
                 var name = GetTabName(snap);
                 var view = new TextView
                 {
@@ -41,6 +77,7 @@ namespace nfirestore_cli {
                 };
 
                 tabView.AddTab(tab, true);
+                openTabs.Add(snap.Reference, tab);
                 OpenDocumentIn(view, snap);
             }
             else
