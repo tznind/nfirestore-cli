@@ -6,11 +6,35 @@
     <RootNamespace>nfirestore_cli</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<LangVersion>12</LangVersion>
+	<OutputType>Exe</OutputType>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<PackAsTool>true</PackAsTool>
+	<ToolCommandName>nfirestore-cli</ToolCommandName>
+	<PackageOutputPath>./nupkg</PackageOutputPath>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<PackageId>nfirestore-cli</PackageId>
 	<Version>1.0.0</Version>
-  </PropertyGroup>
+	<Authors>Thomas Nind</Authors>
+	<Nullable>enable</Nullable>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
+	<Description>Command line visual tool (TUI) for exploring Firestore database collections.</Description>
+	<Owners>Thomas Nind</Owners>
+	<Title>nfirestore-cli, explore Firestore databases from the comfort of your own command line.</Title>
+	<PackageProjectUrl>https://github.com/tznind/nfirestore-cli/</PackageProjectUrl>
+	<IncludeSymbols>true</IncludeSymbols>
+	<PackageTags>csharp, terminal, c#, gui, firestore, browser, console</PackageTags>
+	<PackageIcon>logo.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<PackageReleaseNotes>
+		v1.0.0
+		* Initial Release
+	</PackageReleaseNotes>
+</PropertyGroup>
 
   <ItemGroup>
     <Page Include="..\README.md" Link="README.md" />
+    <Page Include="logo.png" />
   </ItemGroup>
 
   <ItemGroup>
