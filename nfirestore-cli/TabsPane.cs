@@ -57,7 +57,7 @@ namespace nfirestore_cli {
                 name = name.Substring(0, 6) + "…";
             }
 
-            return "[X] " + name;
+            return "[X]" + name;
         }
 
         private void OpenDocumentIn(TextView currentDocumentTextView, DocumentSnapshot snap)
