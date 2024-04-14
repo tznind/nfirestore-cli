@@ -11,6 +11,7 @@ namespace nfirestore_cli {
     using Google.Cloud.Firestore;
     using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
     using Terminal.Gui;
     
     
@@ -22,20 +23,23 @@ namespace nfirestore_cli {
             this.tabView.TabClicked += TabView_TabClicked;
         }
 
-        Dictionary<DocumentReference, Tab> openTabs = new Dictionary<DocumentReference, Tab>();
+        /// <summary>
+        /// Open <see cref="DocumentReference"/> or <see cref="CollectionReference"/>
+        /// </summary>
+        Dictionary<object, Tab> openTabs = new Dictionary<object, Tab>();
 
         private void TabView_TabClicked(object sender, TabMouseEventArgs e)
         {
             // Middle mouse click in tab
             if(e.MouseEvent.Flags == MouseFlags.Button2Clicked)
             {
-                CloseTab(e.Tab);
+                e.MouseEvent.Handled = CloseTab(e.Tab);
             }
 
             // TODO: work out the offset within the tab to support clicking the [X]
         }
 
-        private void CloseTab(Tab tab)
+        private bool CloseTab(Tab tab)
         {
             var kvp = openTabs.FirstOrDefault(kvp => kvp.Value == tab);
 
@@ -45,7 +49,10 @@ namespace nfirestore_cli {
                 openTabs.Remove(kvp.Key);
                 tabView.RemoveTab(tab);
                 tabView.SetNeedsDisplay();
+                return true;
             }
+
+            return false;
         }
 
         internal void OpenDocument(DocumentSnapshot snap, bool newTab)
@@ -88,8 +95,16 @@ namespace nfirestore_cli {
 
         private string GetTabName(DocumentSnapshot snap)
         {
-            string name = snap.Reference.Id;
-            if(name.Length > 8)
+            return GetTabName(snap.Id);
+        }
+        private string GetTabName(CollectionReference cr)
+        {
+            return GetTabName(cr.Id);
+        }
+
+        private string GetTabName(string name)
+        {
+            if (name.Length > 8)
             {
                 name = name.Substring(0, 6) + "…";
             }
@@ -100,6 +115,35 @@ namespace nfirestore_cli {
         private void OpenDocumentIn(TextView currentDocumentTextView, DocumentSnapshot snap)
         {
             currentDocumentTextView.Text = JsonConvert.SerializeObject(snap.ToDictionary(), Formatting.Indented);
+        }
+
+        internal void OpenCollection(CollectionReference cr, IEnumerable<DocumentReference> children)
+        {
+
+            // If collection is already open in another tab
+            if (openTabs.ContainsKey(cr))
+            {
+                // switch to it
+                tabView.SelectedTab = openTabs[cr];
+                return;
+            }
+
+            var name = GetTabName(cr);
+            var view = new TableView
+            {
+                Width = Dim.Fill(),
+                Height = Dim.Fill(),
+                Table = new TableFromCollection(cr, children)
+            };
+
+            var tab = new Tab()
+            {
+                Text = name,
+                View = view
+            };
+
+            tabView.AddTab(tab, true);
+            openTabs.Add(cr, tab);
         }
     }
 }

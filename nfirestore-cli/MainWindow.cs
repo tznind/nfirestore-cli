@@ -87,6 +87,11 @@ namespace nfirestore_cli {
             }
         }
 
+        internal void OpenCollection(CollectionReference cr, IEnumerable<DocumentReference> children)
+        {
+            tabs.OpenCollection(cr, children);
+        }
+
         private void CreateNestedTestDocuments()
         {
             try

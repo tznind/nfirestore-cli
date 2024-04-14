@@ -85,6 +85,11 @@ namespace nfirestore_cli {
                 {
                     MainWindow.ShowDocument(dr, true);
                 }
+
+                if (treeView1.SelectedObject is CollectionReference cr)
+                {
+                    MainWindow.OpenCollection(cr, treeView1.TreeBuilder.GetChildren(cr).OfType<DocumentReference>());
+                }
             }
         }
 
