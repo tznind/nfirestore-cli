@@ -1,0 +1,16 @@
+name: Build, test and package
+
+on: push
+
+jobs:
+  package:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: dotnet build
+      - name: Pack
+        run: dotnet pack -o nupkg
+      - name: Publish to Nuget
+        if: contains(github.ref, 'refs/tags/v')
+        run: dotnet nuget push ./nupkg/nfirestore-cli.$(fgrep \<Version\> ./nfirestore-cli/nfirestore-cli.csproj | grep -oEi '[-0-9.rc]{5,}').nupkg --api-key ${{ secrets.NUGET_KEY }} --source https://api.nuget.org/v3/index.json
