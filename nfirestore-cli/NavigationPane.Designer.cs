@@ -32,7 +32,7 @@ namespace nfirestore_cli {
             this.X = 0;
             this.Y = 0;
             this.Visible = true;
-            this.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.TextAlignment = Terminal.Gui.Alignment.Start;
             this.treeView1.Width = Dim.Fill(0);
             this.treeView1.Height = Dim.Fill(2);
             this.treeView1.X = 0;
@@ -40,7 +40,7 @@ namespace nfirestore_cli {
             this.treeView1.Visible = true;
             this.treeView1.Data = "treeView1";
             this.treeView1.Text = "";
-            this.treeView1.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.treeView1.TextAlignment = Terminal.Gui.Alignment.Start;
             this.treeView1.Style.CollapseableSymbol = new System.Text.Rune('-');
             this.treeView1.Style.ColorExpandSymbol = false;
             this.treeView1.Style.ExpandableSymbol = new System.Text.Rune('+');
@@ -55,7 +55,7 @@ namespace nfirestore_cli {
             this.label.Visible = true;
             this.label.Data = "label";
             this.label.Text = "Document Lookup:";
-            this.label.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label);
             this.tfLookup.Width = Dim.Fill(0);
             this.tfLookup.Height = 1;
@@ -65,7 +65,7 @@ namespace nfirestore_cli {
             this.tfLookup.Secret = false;
             this.tfLookup.Data = "tfLookup";
             this.tfLookup.Text = "";
-            this.tfLookup.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.tfLookup.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.tfLookup);
         }
     }

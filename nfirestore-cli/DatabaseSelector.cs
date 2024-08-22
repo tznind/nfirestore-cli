@@ -62,12 +62,12 @@ namespace nfirestore_cli
             }
             tfEmulator.TextChanged += (s, e) => { options.EmulatorUrl = tfEmulator.Text; };
 
-            btnOk.Clicked += (s, e) =>
+            btnOk.Accept += (s, e) =>
             {
                 Application.RequestStop();
             };
 
-            btnExit.Clicked += (s, e) =>
+            btnExit.Accept += (s, e) =>
             {
                 this.Exit = true;
                 Application.RequestStop();
@@ -75,7 +75,7 @@ namespace nfirestore_cli
 
             spinnerView.Visible = false;
 
-            btnTest.Clicked += (s, e) =>
+            btnTest.Accept += (s, e) =>
             {
 
                 spinnerView.Visible = true;
@@ -100,7 +100,7 @@ namespace nfirestore_cli
                     {
                         Application.Invoke(() =>
                         {
-                            lblError.Text = string.Join('\n',Wrap(ex.Message, lblError.Bounds.Width));
+                            lblError.Text = string.Join('\n',Wrap(ex.Message, lblError.Frame.Width));
                             lblError.Visible = true;
                             lblSuccess.Visible = false;
                             spinnerView.Visible = false;

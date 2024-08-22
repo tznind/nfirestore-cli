@@ -18,7 +18,8 @@ namespace nfirestore_cli.Tabs
 
         public void SaveAs()
         {
-            var sd = new SaveDialog("Save As");
+            var sd = new SaveDialog();
+            sd.Title = "Save As";
 
             sd.Path = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
