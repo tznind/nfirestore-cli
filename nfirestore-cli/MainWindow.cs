@@ -10,8 +10,8 @@
 namespace nfirestore_cli {
     using Google.Cloud.Firestore;
     using Terminal.Gui;
-    
-    
+
+
     public partial class MainWindow {
         private readonly Options options;
         private TileView tiles;
@@ -45,11 +45,12 @@ namespace nfirestore_cli {
             SetDocumentTitle("Document");
             tiles.Tiles.ElementAt(1).ContentView.Add(tabs);
             this.Add(tiles);
-            
+
             this.options = o;
             createTestDocumentsMenuItem.Action = CreateTestDocuments;
             createTestNestedDocumentsMenuItem.Action = CreateNestedTestDocuments;
             saveAsMenuItem.Action = tabs.SaveAs;
+            refreshMenuItem.Action = navigation.RefreshTree;
             exitMenuItem.Action = ()=>Application.RequestStop();
         }
 

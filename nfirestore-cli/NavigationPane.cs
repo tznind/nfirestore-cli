@@ -11,8 +11,8 @@ namespace nfirestore_cli {
     using Google.Cloud.Firestore;
     using System;
     using Terminal.Gui;
-    
-    
+
+
     public partial class NavigationPane {
         public FirestoreDb Db { get; private set; }
 
@@ -36,6 +36,7 @@ namespace nfirestore_cli {
 
         public void RefreshTree()
         {
+            var selectedItem = treeView1.SelectedObject;
             if (Db == null)
             {
                 return;
@@ -47,6 +48,13 @@ namespace nfirestore_cli {
                 if (collections.Length > 0)
                 {
                     treeView1.AddObjects(collections);
+                    
+                    if (selectedItem == null) return;
+                    // Set the tab to the correct document/collection
+                    SetDocumentOrCollection(selectedItem);
+                    // Select the correct item and expand the path to it
+                    treeView1.SelectedObject = selectedItem;
+                    ExpandToSelectedItem(selectedItem);
                 }
             }
             catch (Exception ex)
@@ -77,19 +85,24 @@ namespace nfirestore_cli {
             }
         }
 
+        private void SetDocumentOrCollection(Object selectedObject)
+        {
+            if (selectedObject is DocumentReference dr)
+            {
+                MainWindow.ShowDocument(dr, true);
+            }
+
+            if (selectedObject is CollectionReference cr)
+            {
+                MainWindow.OpenCollection(cr, treeView1.TreeBuilder.GetChildren(cr).OfType<DocumentReference>());
+            }
+        }
+
         private void TreeView1_KeyUp(object sender, Key e)
         {
             if(e.KeyCode == KeyCode.Enter && !e.Handled)
             {
-                if (treeView1.SelectedObject is DocumentReference dr)
-                {
-                    MainWindow.ShowDocument(dr, true);
-                }
-
-                if (treeView1.SelectedObject is CollectionReference cr)
-                {
-                    MainWindow.OpenCollection(cr, treeView1.TreeBuilder.GetChildren(cr).OfType<DocumentReference>());
-                }
+                SetDocumentOrCollection(treeView1.SelectedObject);
             }
         }
 
@@ -98,6 +111,29 @@ namespace nfirestore_cli {
             if (treeView1.SelectedObject is DocumentReference dr)
             {
                 MainWindow.ShowDocument(dr, false);
+            }
+        }
+        
+        private void ExpandToSelectedItem(object selectedItem)
+        {
+            var path = new List<object> { selectedItem };
+            GetParentsOfSelection(path, selectedItem);
+            foreach (var o in path)
+            {
+                treeView1.Expand(o);
+            }
+        }
+        
+        private void GetParentsOfSelection(List<object> path, object selectedItem)
+        {
+            if (selectedItem is DocumentReference dr && dr.Parent != null)
+            {
+                path.Insert(0, dr.Parent);
+                GetParentsOfSelection(path, dr.Parent);
+            } else if (selectedItem is CollectionReference cr && cr.Parent != null)
+            {
+                path.Insert(0, cr.Parent);
+                GetParentsOfSelection(path, cr.Parent);
             }
         }
     }
