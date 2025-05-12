@@ -13,26 +13,28 @@ namespace nfirestore_cli {
     using Terminal.Gui;
     using System.Collections;
     using System.Collections.Generic;
-    
-    
+
+
     public partial class MainWindow : Terminal.Gui.Toplevel {
-        
+
         private Terminal.Gui.ColorScheme tgDefault;
-        
+
         private Terminal.Gui.MenuBar menuBar;
-        
+
         private Terminal.Gui.MenuBarItem fileF9Menu;
-        
+
         private Terminal.Gui.MenuItem saveAsMenuItem;
-        
+
+        private Terminal.Gui.MenuItem refreshMenuItem;
+
         private Terminal.Gui.MenuItem exitMenuItem;
-        
+
         private Terminal.Gui.MenuBarItem testMenu;
-        
+
         private Terminal.Gui.MenuItem createTestDocumentsMenuItem;
-        
+
         private Terminal.Gui.MenuItem createTestNestedDocumentsMenuItem;
-        
+
         private void InitializeComponent() {
             this.menuBar = new Terminal.Gui.MenuBar();
             this.tgDefault = new Terminal.Gui.ColorScheme();
@@ -61,11 +63,15 @@ namespace nfirestore_cli {
             this.saveAsMenuItem = new Terminal.Gui.MenuItem();
             this.saveAsMenuItem.Title = "Save As...";
             this.saveAsMenuItem.Data = "saveAsMenuItem";
+            this.refreshMenuItem = new Terminal.Gui.MenuItem();
+            this.refreshMenuItem.Title = "_Refresh";
+            this.refreshMenuItem.Data = "refreshMenuItem";
             this.exitMenuItem = new Terminal.Gui.MenuItem();
             this.exitMenuItem.Title = "Exit";
             this.exitMenuItem.Data = "exitMenuItem";
             this.fileF9Menu.Children = new Terminal.Gui.MenuItem[] {
                     this.saveAsMenuItem,
+                    this.refreshMenuItem,
                     this.exitMenuItem};
             this.testMenu = new Terminal.Gui.MenuBarItem();
             this.testMenu.Title = "Test";
