@@ -37,7 +37,9 @@ namespace nfirestore_cli {
 
         private void InitializeComponent() {
             this.menuBar = new Terminal.Gui.MenuBar();
+
             this.tgDefault = new Terminal.Gui.ColorScheme(new Terminal.Gui.Attribute(4294967295u, 4278190335u), new Terminal.Gui.Attribute(4278190080u, 4286611584u), new Terminal.Gui.Attribute(4284602070u, 4278190335u), new Terminal.Gui.Attribute(4294967040u, 4278190335u), new Terminal.Gui.Attribute(4282087679u, 4286611584u));
+
             this.Width = Dim.Fill(0);
             this.Height = Dim.Fill(0);
             this.X = 0;

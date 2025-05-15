@@ -44,10 +44,11 @@ namespace nfirestore_cli {
 
 
             Terminal.Gui.Tab tabViewselected;
-
-            tabViewselected = new Terminal.Gui.Tab();
-            tabViewselected.DisplayText = "<Selected>";
-            tabViewselected.View = new View();
+            tabViewselected = new Terminal.Gui.Tab()
+            {
+                DisplayText = "<Selected>",
+                View = new View()
+            };
             tabViewselected.View.Width = Dim.Fill();
             tabViewselected.View.Height = Dim.Fill();
 

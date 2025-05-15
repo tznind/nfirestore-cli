@@ -75,6 +75,7 @@ namespace nfirestore_cli {
             this.redOnBlack = new Terminal.Gui.ColorScheme(new Terminal.Gui.Attribute(4294901760u, 4278190080u), new Terminal.Gui.Attribute(4294901760u, 4294967040u), new Terminal.Gui.Attribute(4293347414u, 4278190080u), new Terminal.Gui.Attribute(4286611584u, 4278190080u), new Terminal.Gui.Attribute(4293347414u, 4294967040u));
             this.greenOnBlack = new Terminal.Gui.ColorScheme(new Terminal.Gui.Attribute(4278222848u, 4278190080u), new Terminal.Gui.Attribute(4278222848u, 4294902015u), new Terminal.Gui.Attribute(4279682572u, 4278190080u), new Terminal.Gui.Attribute(4286611584u, 4278190080u), new Terminal.Gui.Attribute(4279682572u, 4294902015u));
             this.Width = Dim.Fill(0);
+
             this.Height = 16;
             this.X = Pos.Center();
             this.Y = Pos.Center();
