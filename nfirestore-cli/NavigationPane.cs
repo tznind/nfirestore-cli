@@ -75,7 +75,7 @@ namespace nfirestore_cli {
                 treeView1.TreeBuilder = new FirestoreTreeBuilder(this.Db, options.Limit);
                 treeView1.AspectGetter = FirestoreTreePresenter.AspectGetter;
                 treeView1.SelectionChanged += TlvObjects_SelectionChanged;
-                treeView1.KeyUp += TreeView1_KeyUp;
+                treeView1.ObjectActivated += TreeView1OnObjectActivated;
 
                 RefreshTree();
             }
@@ -83,6 +83,11 @@ namespace nfirestore_cli {
             {
                 MessageBox.ErrorQuery("Error Loading",ex.Message, "Close");
             }
+        }
+
+        private void TreeView1OnObjectActivated(object sender, ObjectActivatedEventArgs<object> e)
+        {
+            SetDocumentOrCollection(treeView1.SelectedObject);
         }
 
         private void SetDocumentOrCollection(Object selectedObject)
@@ -95,14 +100,6 @@ namespace nfirestore_cli {
             if (selectedObject is CollectionReference cr)
             {
                 MainWindow.OpenCollection(cr, treeView1.TreeBuilder.GetChildren(cr).OfType<DocumentReference>());
-            }
-        }
-
-        private void TreeView1_KeyUp(object sender, Key e)
-        {
-            if(e.KeyCode == KeyCode.Enter && !e.Handled)
-            {
-                SetDocumentOrCollection(treeView1.SelectedObject);
             }
         }
 
