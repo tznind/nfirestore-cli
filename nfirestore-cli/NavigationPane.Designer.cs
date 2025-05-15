@@ -32,6 +32,7 @@ namespace nfirestore_cli {
             this.X = 0;
             this.Y = 0;
             this.Visible = true;
+            this.CanFocus = true;
             this.TextAlignment = Terminal.Gui.Alignment.Start;
             this.treeView1.Width = Dim.Fill(0);
             this.treeView1.Height = Dim.Fill(2);
