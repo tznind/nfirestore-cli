@@ -70,25 +70,15 @@ namespace nfirestore_cli {
             this.label2 = new Terminal.Gui.Label();
             this.tfProject = new Terminal.Gui.TextField();
             this.label = new Terminal.Gui.Label();
-            this.redOnBlack = new Terminal.Gui.ColorScheme();
-            this.redOnBlack.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.Red, Terminal.Gui.Color.Black);
-            this.redOnBlack.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightRed, Terminal.Gui.Color.Black);
-            this.redOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Red, Terminal.Gui.Color.Yellow);
-            this.redOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightRed, Terminal.Gui.Color.Yellow);
-            this.redOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Gray, Terminal.Gui.Color.Black);
-            this.greenOnBlack = new Terminal.Gui.ColorScheme();
-            this.greenOnBlack.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.Green, Terminal.Gui.Color.Black);
-            this.greenOnBlack.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightGreen, Terminal.Gui.Color.Black);
-            this.greenOnBlack.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Green, Terminal.Gui.Color.Magenta);
-            this.greenOnBlack.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightGreen, Terminal.Gui.Color.Magenta);
-            this.greenOnBlack.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Gray, Terminal.Gui.Color.Black);
+            this.greenOnBlack = new Terminal.Gui.ColorScheme(new Terminal.Gui.Attribute(4278222848u, 4278190080u), new Terminal.Gui.Attribute(4278222848u, 4294902015u), new Terminal.Gui.Attribute(4279682572u, 4278190080u), new Terminal.Gui.Attribute(4286611584u, 4278190080u), new Terminal.Gui.Attribute(4279682572u, 4294902015u));
+            this.redOnBlack = new Terminal.Gui.ColorScheme(new Terminal.Gui.Attribute(4294901760u, 4278190080u), new Terminal.Gui.Attribute(4294901760u, 4294967040u), new Terminal.Gui.Attribute(4293347414u, 4278190080u), new Terminal.Gui.Attribute(4286611584u, 4278190080u), new Terminal.Gui.Attribute(4293347414u, 4294967040u));
             this.Width = Dim.Fill();
             this.Height = 16;
             this.X = Pos.Center();
             this.Y = Pos.Center();
             this.Visible = true;
             this.Modal = true;
-            this.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.TextAlignment = Terminal.Gui.Alignment.Center;
             this.Title = "Firestore Database Chooser";
             this.label.Width = 4;
             this.label.Height = 1;
@@ -97,7 +87,7 @@ namespace nfirestore_cli {
             this.label.Visible = true;
             this.label.Data = "label";
             this.label.Text = "Project:";
-            this.label.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label);
             this.tfProject.Width = Dim.Fill(1);
             this.tfProject.Height = 1;
@@ -107,7 +97,7 @@ namespace nfirestore_cli {
             this.tfProject.Secret = false;
             this.tfProject.Data = "tfProject";
             this.tfProject.Text = "";
-            this.tfProject.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.tfProject.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.tfProject);
             this.label2.Width = 4;
             this.label2.Height = 1;
@@ -116,7 +106,7 @@ namespace nfirestore_cli {
             this.label2.Visible = true;
             this.label2.Data = "label2";
             this.label2.Text = "Database:";
-            this.label2.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label2.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label2);
             this.tfDatabase.Width = Dim.Fill(1);
             this.tfDatabase.Height = 1;
@@ -126,7 +116,7 @@ namespace nfirestore_cli {
             this.tfDatabase.Secret = false;
             this.tfDatabase.Data = "tfDatabase";
             this.tfDatabase.Text = "<default>";
-            this.tfDatabase.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.tfDatabase.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.tfDatabase);
             this.label3.Width = 4;
             this.label3.Height = 1;
@@ -135,7 +125,7 @@ namespace nfirestore_cli {
             this.label3.Visible = true;
             this.label3.Data = "label3";
             this.label3.Text = "Emulator Url:";
-            this.label3.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label3.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label3);
             this.tfEmulator.Width = Dim.Fill(1);
             this.tfEmulator.Height = 1;
@@ -145,7 +135,7 @@ namespace nfirestore_cli {
             this.tfEmulator.Secret = false;
             this.tfEmulator.Data = "tfEmulator";
             this.tfEmulator.Text = "";
-            this.tfEmulator.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.tfEmulator.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.tfEmulator);
             this.label4.Width = 4;
             this.label4.Height = 1;
@@ -154,7 +144,7 @@ namespace nfirestore_cli {
             this.label4.Visible = true;
             this.label4.Data = "label4";
             this.label4.Text = "(Leave blank for production)";
-            this.label4.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label4.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label4);
             this.label5.Width = 4;
             this.label5.Height = 1;
@@ -163,7 +153,7 @@ namespace nfirestore_cli {
             this.label5.Visible = true;
             this.label5.Data = "label5";
             this.label5.Text = "Max Results:";
-            this.label5.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label5.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label5);
             this.tfMaxResults.Width = Dim.Fill(1);
             this.tfMaxResults.Height = 1;
@@ -173,7 +163,7 @@ namespace nfirestore_cli {
             this.tfMaxResults.Secret = false;
             this.tfMaxResults.Data = "tfMaxResults";
             this.tfMaxResults.Text = "";
-            this.tfMaxResults.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.tfMaxResults.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.tfMaxResults);
             this.label6.Width = 4;
             this.label6.Height = 1;
@@ -182,7 +172,7 @@ namespace nfirestore_cli {
             this.label6.Visible = true;
             this.label6.Data = "label6";
             this.label6.Text = "(Maximum number of documents to request in any single query)";
-            this.label6.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.label6.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.label6);
             this.btnOk.Width = 8;
             this.btnOk.Height = 1;
@@ -191,7 +181,7 @@ namespace nfirestore_cli {
             this.btnOk.Visible = true;
             this.btnOk.Data = "btnOk";
             this.btnOk.Text = "Ok";
-            this.btnOk.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.btnOk.TextAlignment = Terminal.Gui.Alignment.Center;
             this.btnOk.IsDefault = true;
             this.Add(this.btnOk);
             this.btnTest.Width = 8;
@@ -201,7 +191,7 @@ namespace nfirestore_cli {
             this.btnTest.Visible = true;
             this.btnTest.Data = "btnTest";
             this.btnTest.Text = "Test";
-            this.btnTest.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.btnTest.TextAlignment = Terminal.Gui.Alignment.Center;
             this.btnTest.IsDefault = false;
             this.Add(this.btnTest);
             this.spinnerView.Width = 1;
@@ -213,7 +203,7 @@ namespace nfirestore_cli {
             this.spinnerView.Style = new Terminal.Gui.SpinnerStyle.Line();
             this.spinnerView.Data = "spinnerView";
             this.spinnerView.Text = "/";
-            this.spinnerView.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.spinnerView.TextAlignment = Terminal.Gui.Alignment.Start;
             this.Add(this.spinnerView);
             this.btnExit.Width = 8;
             this.btnExit.Height = 1;
@@ -222,7 +212,7 @@ namespace nfirestore_cli {
             this.btnExit.Visible = true;
             this.btnExit.Data = "btnExit";
             this.btnExit.Text = "Exit";
-            this.btnExit.TextAlignment = Terminal.Gui.TextAlignment.Centered;
+            this.btnExit.TextAlignment = Terminal.Gui.Alignment.Center;
             this.btnExit.IsDefault = false;
             this.Add(this.btnExit);
             this.lblError.Width = Dim.Fill(0);
