@@ -48,7 +48,7 @@ namespace nfirestore_cli {
             this.treeView1.Style.LeaveLastRow = false;
             this.treeView1.Style.ShowBranchLines = true;
             this.Add(this.treeView1);
-            this.label.Width = 4;
+            this.label.Width = Dim.Fill();
             this.label.Height = 1;
             this.label.X = 0;
             this.label.Y = Pos.AnchorEnd(2);
