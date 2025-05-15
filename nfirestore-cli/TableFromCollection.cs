@@ -19,8 +19,17 @@ namespace nfirestore_cli
         public TableFromCollection(CollectionReference cr, IEnumerable<DocumentReference> docs)
         {
             Collection = cr;
-            _snaps = docs.ToDictionary(k => k, d => d.GetSnapshotAsync().Result.ToDictionary()).ToList();
-            var cols = _snaps.SelectMany(k=>k.Value.Keys).Distinct().Order().ToList();
+            _snaps = docs
+                .ToDictionary(k => k, d => d.GetSnapshotAsync().Result?.ToDictionary())
+                .ToList();
+
+            var cols = _snaps
+                .Where(k => k.Value != null)               // Skip null dictionaries
+                .SelectMany(k => k.Value.Keys)             // Safely access Keys
+                .Distinct()
+                .Order()
+                .ToList();
+
             cols.Insert(0, "Id");
             _columns = cols.ToArray();
         }

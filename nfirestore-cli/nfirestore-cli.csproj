@@ -14,7 +14,7 @@
 	<PackageOutputPath>./nupkg</PackageOutputPath>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<PackageId>nfirestore-cli</PackageId>
-	<Version>1.0.3</Version>
+	<Version>1.0.4</Version>
 	<Authors>Thomas Nind</Authors>
 	<Nullable>enable</Nullable>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -27,6 +27,8 @@
 	<PackageIcon>logo.png</PackageIcon>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageReleaseNotes>
+		v1.0.4
+		* Fix null reference expanding middle collections
 		v1.0.3
 		* Support for opening multiple documents/collections at once (tabs)
 		v1.0.1
@@ -51,7 +53,7 @@
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="CsvHelper" Version="31.0.3" />
     <PackageReference Include="Google.Cloud.Firestore" Version="3.5.1" />
-	  <PackageReference Include="Terminal.Gui" Version="2.0.0-pre.250" />
+	  <PackageReference Include="Terminal.Gui" Version="2.0.0-v2-develop.2168" />
   </ItemGroup>
 
 </Project>

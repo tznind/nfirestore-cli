@@ -37,12 +37,13 @@ namespace nfirestore_cli {
 
         private void InitializeComponent() {
             this.menuBar = new Terminal.Gui.MenuBar();
-            this.tgDefault = new Terminal.Gui.ColorScheme();
-            this.tgDefault.Normal = new Terminal.Gui.Attribute(Terminal.Gui.Color.White, Terminal.Gui.Color.Blue);
-            this.tgDefault.HotNormal = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightCyan, Terminal.Gui.Color.Blue);
-            this.tgDefault.Focus = new Terminal.Gui.Attribute(Terminal.Gui.Color.Black, Terminal.Gui.Color.Gray);
-            this.tgDefault.HotFocus = new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightBlue, Terminal.Gui.Color.Gray);
-            this.tgDefault.Disabled = new Terminal.Gui.Attribute(Terminal.Gui.Color.Yellow, Terminal.Gui.Color.Blue);
+            this.tgDefault = new Terminal.Gui.ColorScheme(
+                new Terminal.Gui.Attribute(Terminal.Gui.Color.White, Terminal.Gui.Color.Blue),
+                new Terminal.Gui.Attribute(Terminal.Gui.Color.Black, Terminal.Gui.Color.Gray),
+                new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightCyan, Terminal.Gui.Color.Blue),
+                new Terminal.Gui.Attribute(Terminal.Gui.Color.Yellow, Terminal.Gui.Color.Blue),
+                new Terminal.Gui.Attribute(Terminal.Gui.Color.BrightBlue, Terminal.Gui.Color.Gray)
+            );
             this.Width = Dim.Fill(0);
             this.Height = Dim.Fill(0);
             this.X = 0;
@@ -50,14 +51,14 @@ namespace nfirestore_cli {
             this.Visible = true;
             this.ColorScheme = this.tgDefault;
             this.Modal = false;
-            this.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.TextAlignment = Terminal.Gui.Alignment.Start;
             this.menuBar.Width = Dim.Fill(0);
             this.menuBar.Height = 1;
             this.menuBar.X = 0;
             this.menuBar.Y = 0;
             this.menuBar.Visible = true;
             this.menuBar.Data = "menuBar";
-            this.menuBar.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.menuBar.TextAlignment = Terminal.Gui.Alignment.Start;
             this.fileF9Menu = new Terminal.Gui.MenuBarItem();
             this.fileF9Menu.Title = "_File (F9)";
             this.saveAsMenuItem = new Terminal.Gui.MenuItem();

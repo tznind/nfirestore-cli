@@ -29,20 +29,24 @@ namespace nfirestore_cli {
             this.X = 0;
             this.Y = 0;
             this.Visible = true;
-            this.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.TextAlignment = Terminal.Gui.Alignment.Start;
             this.tabView.Width = Dim.Fill(0);
             this.tabView.Height = Dim.Fill(0);
             this.tabView.X = 0;
             this.tabView.Y = 0;
             this.tabView.Visible = true;
             this.tabView.Data = "tabView";
-            this.tabView.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.tabView.TextAlignment = Terminal.Gui.Alignment.Start;
             this.tabView.MaxTabTextWidth = 30u;
             this.tabView.Style.ShowBorder = false;
             this.tabView.Style.ShowTopLine = false;
             this.tabView.Style.TabsOnBottom = false;
             Terminal.Gui.Tab tabViewselected;
-            tabViewselected = new Terminal.Gui.Tab("<Selected>", new View());
+            tabViewselected = new Terminal.Gui.Tab()
+            {
+                DisplayText = "<Selected>",
+                View = new View()
+            };
             tabViewselected.View.Width = Dim.Fill();
             tabViewselected.View.Height = Dim.Fill();
             this.currentDocumentTextView.Width = Dim.Fill(0);
@@ -56,7 +60,7 @@ namespace nfirestore_cli {
             this.currentDocumentTextView.Multiline = true;
             this.currentDocumentTextView.Data = "currentDocumentTextView";
             this.currentDocumentTextView.Text = "";
-            this.currentDocumentTextView.TextAlignment = Terminal.Gui.TextAlignment.Left;
+            this.currentDocumentTextView.TextAlignment = Terminal.Gui.Alignment.Start;
             tabViewselected.View.Add(this.currentDocumentTextView);
             tabView.AddTab(tabViewselected, false);
             this.tabView.ApplyStyleChanges();
