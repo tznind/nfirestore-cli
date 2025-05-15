@@ -14,7 +14,7 @@
 	<PackageOutputPath>./nupkg</PackageOutputPath>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<PackageId>nfirestore-cli</PackageId>
-	<Version>1.0.4</Version>
+	<Version>1.0.5</Version>
 	<Authors>Thomas Nind</Authors>
 	<Nullable>enable</Nullable>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -27,6 +27,8 @@
 	<PackageIcon>logo.png</PackageIcon>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<PackageReleaseNotes>
+		v1.0.5
+		* Update Terminal.Gui dependencies to latest Terminal Gui Designer compatible release (4400) 
 		v1.0.4
 		* Fix null reference expanding middle collections
 		v1.0.3
