@@ -17,8 +17,7 @@ namespace nfirestore_cli.Tabs
         public abstract bool Is(CollectionReference cr);
 
         public void SaveAs()
-        
-        
+        {
             var sd = new SaveDialog()
             {
                 Title = "Save As"
