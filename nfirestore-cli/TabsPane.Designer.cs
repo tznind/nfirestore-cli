@@ -41,10 +41,16 @@ namespace nfirestore_cli {
             this.tabView.Style.ShowBorder = false;
             this.tabView.Style.ShowTopLine = false;
             this.tabView.Style.TabsOnBottom = false;
+
+
             Terminal.Gui.Tab tabViewselected;
-            tabViewselected = new Terminal.Gui.Tab("<Selected>", new View());
+
+            tabViewselected = new Terminal.Gui.Tab();
+            tabViewselected.DisplayText = "<Selected>";
+            tabViewselected.View = new View();
             tabViewselected.View.Width = Dim.Fill();
             tabViewselected.View.Height = Dim.Fill();
+
             this.currentDocumentTextView.Width = Dim.Fill(0);
             this.currentDocumentTextView.Height = Dim.Fill(0);
             this.currentDocumentTextView.X = 0;
