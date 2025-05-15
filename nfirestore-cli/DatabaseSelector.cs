@@ -62,22 +62,24 @@ namespace nfirestore_cli
             }
             tfEmulator.TextChanged += (s, e) => { options.EmulatorUrl = tfEmulator.Text; };
 
-            btnOk.Accept += (s, e) =>
+            btnOk.Accepting += (s, e) =>
             {
+                e.Cancel = true;
                 Application.RequestStop();
             };
 
-            btnExit.Accept += (s, e) =>
+            btnExit.Accepting += (s, e) =>
             {
+                e.Cancel = true;
                 this.Exit = true;
                 Application.RequestStop();
             };
 
             spinnerView.Visible = false;
 
-            btnTest.Accept += (s, e) =>
+            btnTest.Accepting += (s, e) =>
             {
-
+                e.Cancel = true;
                 spinnerView.Visible = true;
 
                 Task.Run(() =>

@@ -46,7 +46,7 @@ namespace nfirestore_cli {
             {
                 openTabs.Remove(found);
                 tabView.RemoveTab(tab);
-                tabView.SetNeedsDisplay();
+                tabView.SetNeedsDraw();
                 return true;
             }
 
